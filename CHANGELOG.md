@@ -30,13 +30,14 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
   - `README.md` en `src/backend/` con diseño de base de datos y Edge Functions
   - `.gitignore` con reglas para secretos, dependencias y archivos temporales
 
-### 🔧 Cambiado
+### 🔧 Configuración Vigente
 
-- Reorganización de archivos de documentación desde `docs/docs_XX_...` a la estructura de carpetas `docs/XX_category/`
-- Corrección de cálculos financieros en `infrastructure_cost_analysis.md`:
-  - Costo acumulado 3 años: $8.990.000 → $9.000.000
-  - Agregada columna de "Costo Mensual" para transparencia de gastos recurrentes
-  - Clarificación de costos de Supabase: Free Tier en Año 1, Plan Pro en Años 2-3
+- **Modelo de Costos:** Tarifa mensual recurrente (sin one-time)
+- **Tabulador de Desarrollo:** $1.400.000 COP/mes para MVP (4 meses) y posteriores desarrollos
+- **Infraestructura Cloud:** Free Tier Año 1, Plan Pro $100.000/mes Años 2-3
+- **Presupuesto Vigente:**
+  - Año 1: $6.230.000 COP
+  - Acumulado 3 años: $12.590.000 COP
 
 ### 📊 Métricas del Proyecto
 

@@ -32,19 +32,22 @@ El presente documento detalla la estimación de costos asociados al ciclo de vid
 
 ---
 
-## 📊 Explicación de Cálculos y Notas
+## 📊 Explicación de Cálculos
 
-### Columna de Costo Mensual
-- **Asterisco (*) en Supabase:** Aplica solo a partir del Año 2 cuando se migra al plan Pro. En Año 1 se usa Free Tier ($0/mes).
-- **Asterisco (*) en Soporte:** Muestra $0 para el Año 1 (garantía incluida) y $62.500/mes para Años 2-3 ($750.000 ÷ 12 meses).
-- **Asterisco (*) en Total mensual:** Promedio para Año 1 es $52.500/mes (sin Supabase). Promedio para Años 2-3 es $215.000/mes (todos los servicios activos).
+### Detalles de Componentes
 
-### Correcciones Realizadas
-| Concepto | Valor Anterior | Valor Correcto | Justificación |
-| :--- | :---: | :---: | :--- |
-| **Desarrollo de Software** | $2.000.000 (one-time) | $1.400.000/mes (4 meses = $5.600.000) | Cambio a modelo ágil iterativo: $1.4M COP/mes permite flexibilidad en alcance y posteriores desarrollos con el mismo tabulador |
-| **Costo Año 1** | $5.430.000 | $6.230.000 | Nuevo cálculo: Dev($5.6M) + Gemini($0.48M) + Hosting($0.15M) = $6.23M |
-| **Costo Acumulado 3 Años** | $11.790.000 | $12.590.000 | Nuevo cálculo: Dev($5.6M) + Supabase($3.6M) + Gemini($1.44M) + Hosting($0.45M) + Soporte($1.5M) = $12.59M |
-| **Estructura de Supabase** | $0 - $1.200.000 por año | $0 (Año 1), $1.200.000 (Años 2-3) | Clarificación: Free Tier en Año 1; Pro plan a partir de Año 2 ($100.000 COP/mes) |
-| **Moneda de referencia** | USD para servicios externos | COP para todos los costos | Todos los valores expresados en COP como moneda base del proyecto |
-| **Tabulador de Nuevos Desarrollos** | No especificado | $1.400.000 COP/mes | Cualquier desarrollo posterior (features, integraciones, módulos) utiliza el mismo tabulador mensual |
+**Desarrollo de Software:** $1.400.000 COP/mes (4 meses MVP = $5.600.000 COP)
+- Modelo de tarifa mensual para garantizar flexibilidad en alcance y facilitar posteriores desarrollos modulares
+- Nuevos desarrollos post-MVP utilizan el mismo tabulador mensual
+
+**Supabase:** Free Tier en Año 1 ($0/mes), Plan Pro a partir de Año 2 ($100.000 COP/mes)
+- Incluye backups automáticos, conexiones concurrentes y escalabilidad en logs
+
+**Gemini API:** $40.000 COP/mes basado en consumo de 1M tokens
+- Consultas psicométricas interactivas y recomendaciones del Sherpa NPC
+
+**Hosting Frontend:** $12.500 COP/mes
+- Dominio `.com` o `.co` + hosting estático en Vercel/Netlify con SSL nativo
+
+**Soporte y Mantenimiento:** $0 en Año 1 (incluido), $62.500 COP/mes en Años 2-3
+- Garantía incluida en Año 1; mantenimiento preventivo: $750.000/año

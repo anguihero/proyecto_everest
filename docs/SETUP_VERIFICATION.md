@@ -94,12 +94,10 @@ everest-project/
     - Gemini API: $40.000 COP/mes
     - Hosting y dominios: $12.500 COP/mes
     - Soporte: $62.500 COP/mes (Años 2-3)
-  - ✅ Tabla con columna de "Costo Mensual" agregada
   - ✅ Proyección a 1 año: $6.230.000 COP
   - ✅ Proyección a 3 años: $12.590.000 COP
   - ✅ Tabulador de nuevos desarrollos: $1.400.000 COP/mes (igual a MVP)
-  - ✅ Notas técnicas sobre TRM y escalabilidad incluidas
-  - ✅ Sección de explicación de cálculos y correcciones
+  - ✅ Notas técnicas sobre estructura de costos incluidas
 
 ---
 
