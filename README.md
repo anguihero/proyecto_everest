@@ -54,6 +54,12 @@ everest-project/
 │   │   └── legal_compliance_ip.md     # NDA, Habeas Data y Propiedad Intelectual
 │   └── 03_financials/
 │       └── infrastructure_cost_analysis.md # Presupuesto e inversiones
+├── user_stories/                      # Gestión de Historias de Usuario
+│   ├── INDEX.md                       # Índice maestro de HU
+│   ├── templates/                     # Plantillas y ejemplos
+│   ├── backlog/                       # HU pendientes
+│   ├── in_progress/                   # HU en desarrollo
+│   └── done/                          # HU completadas
 ├── src/
 │   ├── frontend/                      # Código del cliente web
 │   └── backend/                       # Edge Functions y lógica de Supabase
@@ -65,34 +71,43 @@ everest-project/
 
 ### 📅 Planeación y Gestión
 
-1. **[Cronograma del Proyecto (Gantt)](docs/01_planning/project_gantt_plan.md)**
-   - Plan de trabajo detallado por semanas (W1-W9)
+1. **[Cronograma del Proyecto (Gantt)](01_planning/project_gantt_plan.md)**
+   - Plan de trabajo detallado por semanas (W1-W12)
    - Fases sincrónicas y asíncronas
    - Milestones y dependencias
+   - **5 semanas dedicadas al levantamiento de historias de usuario**
 
-2. **[Dinámicas Ágiles y Workflow](docs/01_planning/agile_dynamics_workflow.md)**
+2. **[Dinámicas Ágiles y Workflow](01_planning/agile_dynamics_workflow.md)**
    - Sprints de 2 semanas
    - Daily Scrum de 15 minutos
    - Estados del Kanban: TO DO, DOING, PAUSED, DONE
 
 ### 🏛️ Gobernanza y Cumplimiento
 
-3. **[Roles y Matriz RACI](docs/02_governance/roles_raci_matrix.md)**
+3. **[Roles y Matriz RACI](02_governance/roles_raci_matrix.md)**
    - Responsabilidades de Andrés (TL/Dev), Diego (UI/Analista) y Óscar (PO)
    - Protocolos de toma de decisiones arquitecturales vs. de negocio
 
-4. **[Marco Legal y Compliance](docs/02_governance/legal_compliance_ip.md)**
+4. **[Marco Legal y Compliance](02_governance/legal_compliance_ip.md)**
    - Acuerdo de Confidencialidad (NDA)
    - Tratamiento de Datos Sensibles (Habeas Data - Ley 1581)
    - Propiedad Intelectual del Software
 
 ### 💰 Financiero
 
-5. **[Análisis de Costos de Infraestructura](docs/03_financials/infrastructure_cost_analysis.md)**
+5. **[Análisis de Costos de Infraestructura](03_financials/infrastructure_cost_analysis.md)**
    - Presupuesto detallado mensual y anual
    - Inversión de desarrollo: $2.000.000 COP
    - Costos operativos (Supabase, Gemini API, Hosting, Soporte)
    - Proyección a 1 y 3 años
+
+### 📚 Historias de Usuario
+
+6. **[Sistema de Gestión de HU](user_stories/README.md)**
+   - Plantillas estandarizadas con criterios de aceptación Gherkin
+   - Flujo Kanban: Backlog → In Progress → Done
+   - [Índice maestro de todas las HU](user_stories/INDEX.md)
+   - [Plantilla vacía](user_stories/templates/TEMPLATE.md) | [Ejemplo completo](user_stories/templates/EXAMPLE.md)
 
 ---
 
@@ -146,7 +161,7 @@ El proyecto se desarrolla bajo **Spec-Driven Development (SDD)** con enfoque ág
 ## 📅 Estado del Proyecto
 
 **Fase Actual:** Configuración inicial del espacio de trabajo SDD  
-**Siguiente Milestone:** M1 - Backlog firmado y arquitectura aprobada (Fin de Semana 2)
+**Siguiente Milestone:** M1 - Backlog completo firmado con todas las HU refinadas (Fin de Semana 5)
 
 ---
 

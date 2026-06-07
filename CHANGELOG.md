@@ -14,7 +14,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
   - Carpetas de código fuente: `src/frontend/`, `src/backend/`
   
 - **Documentación Técnica Completa (SDD)**
-  - `project_gantt_plan.md`: Cronograma detallado de 9 semanas con diagrama Gantt en Markdown
+  - `project_gantt_plan.md`: Cronograma detallado de 12 semanas con diagrama Gantt en Markdown (5 semanas de levantamiento de HU)
   - `agile_dynamics_workflow.md`: Rituales ágiles (Sprints de 2 semanas, Daily Scrum, Kanban)
   - `roles_raci_matrix.md`: Matriz RACI con roles de Andrés, Diego y Óscar
   - `legal_compliance_ip.md`: NDA, Habeas Data (Ley 1581) y cláusulas de Propiedad Intelectual
@@ -37,7 +37,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 ### 📊 Métricas del Proyecto
 
 - **Documentos técnicos creados:** 5 (100% de la fase de planeación SDD)
-- **Cronograma planificado:** 9 semanas (Sprint 0 - W9)
+- **Cronograma planificado:** 12 semanas (5 semanas de levantamiento de HU + 7 semanas de diseño/desarrollo)
 - **Presupuesto total estimado a 3 años:** $9.000.000 COP
 - **Inversión de desarrollo inicial:** $2.000.000 COP
 
@@ -45,22 +45,23 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ## Próximos Hitos
 
-### [M1] - Fin de Semana 2 (Planificado)
-- [ ] Backlog firmado por Óscar (Product Owner)
-- [ ] Arquitectura técnica aprobada por Andrés (Tech Lead)
-- [ ] Definición completa de historias de usuario con criterios de aceptación
+### [M1] - Fin de Semana 5 (Planificado)
+- [ ] Backlog completo firmado por Óscar (Product Owner)
+- [ ] Todas las historias de usuario refinadas con criterios de aceptación
+- [ ] Estimación de Story Points completada por el equipo técnico
 
-### [M2] - Fin de Semana 4 (Planificado)
+### [M2] - Fin de Semana 7 (Planificado)
 - [ ] Esquema de base de datos en Supabase con RLS configurado
+- [ ] Arquitectura técnica aprobada por Andrés (Tech Lead)
 - [ ] Diseño completo de la interfaz UI del Everest
 - [ ] Identidad corporativa y assets visuales finalizados
 
-### [M3] - Fin de Semana 7 (Planificado)
+### [M3] - Fin de Semana 10 (Planificado)
 - [ ] Code Freeze con frontend y backend integrados
 - [ ] Cobertura básica de pruebas unitarias
 - [ ] Agente Gemini con Guardrails implementado
 
-### [M4] - Fin de Semana 9 (Planificado)
+### [M4] - Fin de Semana 12 (Planificado)
 - [ ] Plataforma desplegada en producción
 - [ ] Transferencia de conocimiento y entrega formal
 - [ ] Firma de acta de conformidad del delivery

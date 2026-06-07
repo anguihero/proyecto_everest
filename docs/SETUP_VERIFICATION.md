@@ -18,7 +18,7 @@ everest-project/
 ├── docs/                                         ✅ Documentación técnica
 │   │
 │   ├── 01_planning/                              ✅ Planeación del proyecto
-│   │   ├── project_gantt_plan.md                 ✅ Cronograma de 9 semanas (Gantt)
+│   │   ├── project_gantt_plan.md                 ✅ Cronograma de 12 semanas (Gantt) - 5 semanas de levantamiento de HU
 │   │   └── agile_dynamics_workflow.md            ✅ Rituales ágiles y Kanban
 │   │
 │   ├── 02_governance/                            ✅ Gobernanza y cumplimiento
@@ -44,11 +44,12 @@ everest-project/
 ### 📋 Documentos de Planeación (docs/01_planning/)
 
 - [x] **project_gantt_plan.md**
-  - ✅ Cronograma detallado por semanas (W1-W9)
+  - ✅ Cronograma detallado por semanas (W1-W12)
   - ✅ Modalidades sincrónicas/asíncronas definidas
   - ✅ Dependencias entre fases mapeadas
-  - ✅ Diagrama Gantt en formato ASCII
-  - ✅ 4 Milestones críticos definidos (M1-M4)
+  - ✅ Diagrama Gantt en formato ASCII (12 semanas)
+  - ✅ 4 Milestones críticos definidos (M1: W5, M2: W7, M3: W10, M4: W12)
+  - ✅ **5 semanas dedicadas exclusivamente al levantamiento de historias de usuario**
   - ✅ Todas las etapas requeridas cubiertas:
     - Definición de requerimientos e historias
     - Exploración de infraestructura y estado del arte
