@@ -6,19 +6,21 @@ El presente documento detalla la estimación de costos asociados al ciclo de vid
 
 | Componente | Tipo de Gasto | Costo Mensual | Costo Año 1 | Costo Acumulado 3 Años | Notas Técnicas |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| **Desarrollo de Software** | Único (One-time) | N/A | $2.400.000 | $2.400.000 | Honorarios del equipo de desarrollo e ingeniería. |
+| **Desarrollo de Software** | Recurrente (Mensual) | $1.200.000 | $4.800.000 | $4.800.000 | Honorarios del equipo de desarrollo e ingeniería. Modelo ágil: $1.200.000 COP/mes. MVP = 4 meses. Futuros desarrollos siguen el mismo tabulador. |
 | **Infraestructura Cloud (Supabase)**| Recurrente (SaaS) | $100.000* | $0 - $1.200.000** | $3.600.000 | Plan Pro: $100.000 COP/mes. Año 1 con Free Tier ($0). Años 2-3 con plan Pro. |
 | **Consumo de APIs de IA (Gemini)** | Recurrente (Uso) | $40.000 | $480.000 | $1.440.000 | Estimado en base a tokens consumidos ($40.000 COP/mes) con Guardrails activos. |
 | **Hosting Frontend y Dominios** | Recurrente (Anual) | $12.500 | $150.000 | $450.000 | Dominio `.com` o `.co` + Hosting estático administrado (Vercel/Netlify). |
 | **Soporte y Mantenimiento** | Recurrente (Anual) | $0 / $62.500*** | $0 | $1.500.000 | Garantía incluida el Año 1 ($0). Mantenimiento preventivo Años 2-3 ($750.000/año). |
-| **TOTAL ESTIMADO** | | **$152.500*** | **$3.030.000** | **$9.390.000***| **Sujeto a variaciones de TRM y volumen real de usuarios.** |
+| **TOTAL ESTIMADO** | | **$252.500*** | **$5.430.000** | **$11.790.000***| **Sujeto a variaciones de TRM y volumen real de usuarios. Desarrollo incluido: 4 meses MVP + costos operativos 3 años.** |
 
 ---
 
 ## 🛠️ Desglose de Rubros Tecnológicos y Supuestos
 
-### 1. Desarrollo y Diseño ($2.400.000 COP - Capex)
-* Costo fijo establecido para la ejecución del MVP que incluye la entrega de la interfaz del Everest, panel de administración para clientes empresariales, panel del coach y lógica relacional interna.
+### 1. Desarrollo y Diseño ($1.200.000 COP/mes - Modelo Ágil Iterativo)
+* Modelo de tarifa mensual para la ejecución del MVP (4 meses) y posteriores desarrollos. Incluye la entrega de la interfaz del Everest, panel de administración para clientes empresariales, panel del coach, lógica relacional interna, y agente Sherpa.
+* **Estructura:** $1.200.000 COP/mes × 4 meses = $4.800.000 para MVP completo
+* **Nuevos desarrollos post-MVP:** Mantienen el tabulador de $1.200.000 COP/mes (modulares, no acumulativos)
 
 ### 2. Infraestructura y Hosting (Opex)
 * **Supabase (BaaS):** Se presupuesta el plan Pro de $100.000 COP/mes para asegurar respaldos automáticos, mayores conexiones concurrentes y escalabilidad en almacenamiento de logs analíticos. Si el tráfico inicial es bajo, se operará bajo el Free Tier ($0 COP).
@@ -40,8 +42,9 @@ El presente documento detalla la estimación de costos asociados al ciclo de vid
 ### Correcciones Realizadas
 | Concepto | Valor Anterior | Valor Correcto | Justificación |
 | :--- | :---: | :---: | :--- |
-| **Costo Acumulado 3 Años** | $8.990.000 | $9.390.000 | Corrección aritmética: Dev($2.4M) + Supabase($3.6M) + Gemini($1.44M) + Hosting($0.45M) + Soporte($1.5M) = $9.39M |
-| **Desarrollo de Software** | $2.000.000 | $2.400.000 | Actualización del honorario de desarrollo acordado con el equipo |
-| **Costo Año 1** | $2.630.000 | $3.030.000 | Ajuste por actualización del costo de desarrollo ($2.4M + $480K Gemini + $150K Hosting) |
+| **Desarrollo de Software** | $2.000.000 (one-time) | $1.200.000/mes (4 meses = $4.800.000) | Cambio a modelo ágil iterativo: $1.2M COP/mes permite flexibilidad en alcance y posteriores desarrollos con el mismo tabulador |
+| **Costo Año 1** | $3.030.000 | $5.430.000 | Nuevo cálculo: Dev($4.8M) + Gemini($0.48M) + Hosting($0.15M) = $5.43M |
+| **Costo Acumulado 3 Años** | $9.390.000 | $11.790.000 | Nuevo cálculo: Dev($4.8M) + Supabase($3.6M) + Gemini($1.44M) + Hosting($0.45M) + Soporte($1.5M) = $11.79M |
 | **Estructura de Supabase** | $0 - $1.200.000 por año | $0 (Año 1), $1.200.000 (Años 2-3) | Clarificación: Free Tier en Año 1; Pro plan a partir de Año 2 ($100.000 COP/mes) |
 | **Moneda de referencia** | USD para servicios externos | COP para todos los costos | Todos los valores expresados en COP como moneda base del proyecto |
+| **Tabulador de Nuevos Desarrollos** | No especificado | $1.200.000 COP/mes | Cualquier desarrollo posterior (features, integraciones, módulos) utiliza el mismo tabulador mensual |
