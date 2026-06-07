@@ -222,25 +222,25 @@ La plataforma fue diseñada desde su arquitectura base con las siguientes garant
 
 | Componente | Valor |
 |------------|-------|
-| **Desarrollo MVP (4 meses)** | $1.200.000 COP/mes = $4.800.000 COP total |
-| **Tabulador para nuevos desarrollos post-MVP** | $1.200.000 COP/mes (modulares, no acumulativos) |
+| **Desarrollo MVP (4 meses)** | $1.400.000 COP/mes = $5.600.000 COP total |
+| **Tabulador para nuevos desarrollos post-MVP** | $1.400.000 COP/mes (modulares, no acumulativos) |
 | **Infraestructura y operación (Supabase, Gemini, Hosting)** | $240.000 - $215.000 COP/mes (según año) |
 | **Soporte y mantenimiento (Años 2-3)** | $62.500 COP/mes |
 | **Implementación y configuración inicial** | Incluida |
 | **Sesión de onboarding para el equipo de RRHH** | Incluida |
 
 ### Proyección de Inversión Inicial (Año 1)
-- Desarrollo: $4.800.000 COP
+- Desarrollo: $5.600.000 COP
 - Operación (Gemini + Hosting): $630.000 COP
-- **Total Año 1: $5.430.000 COP**
+- **Total Año 1: $6.230.000 COP**
 
 ### Proyección Acumulada (3 Años)
-- Desarrollo: $4.800.000 COP
+- Desarrollo: $5.600.000 COP
 - Infraestructura (Supabase + Gemini + Hosting): $5.490.000 COP
 - Soporte: $1.500.000 COP
-- **Total 3 Años: $11.790.000 COP**
+- **Total 3 Años: $12.590.000 COP**
 
-> **Modelo de facturación flexible:** El desarrollo es modular — cualquier nueva funcionalidad post-MVP utiliza el mismo tabulador de $1.200.000 COP/mes. No hay costos acumulativos.
+> **Modelo de facturación flexible:** El desarrollo es modular — cualquier nueva funcionalidad post-MVP utiliza el mismo tabulador de $1.400.000 COP/mes. No hay costos acumulativos.
 
 ---
 

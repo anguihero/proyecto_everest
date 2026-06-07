@@ -42,9 +42,9 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 - **Documentos técnicos creados:** 5 (100% de la fase de planeación SDD)
 - **Cronograma planificado:** 12 semanas (5 semanas de levantamiento de HU + 7 semanas de diseño/desarrollo)
-- **Presupuesto total estimado a 3 años:** $11.790.000 COP
-- **Inversión de desarrollo inicial:** $4.800.000 COP (4 meses MVP)
-- **Tabulador de nuevos desarrollos:** $1.200.000 COP/mes
+- **Presupuesto total estimado a 3 años:** $12.590.000 COP
+- **Inversión de desarrollo inicial:** $5.600.000 COP (4 meses MVP)
+- **Tabulador de nuevos desarrollos:** $1.400.000 COP/mes
 
 ---
 

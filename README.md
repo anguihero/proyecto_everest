@@ -97,10 +97,10 @@ everest-project/
 
 5. **[Análisis de Costos de Infraestructura](03_financials/infrastructure_cost_analysis.md)**
    - Presupuesto detallado mensual y anual
-   - Inversión de desarrollo: $1.200.000 COP/mes (4 meses MVP = $4.800.000 COP)
-   - Presupuesto total estimado a 3 años: $11.790.000 COP
-   - Inversión de desarrollo inicial: $4.800.000 COP (4 meses)
-   - Tabulador de nuevos desarrollos: $1.200.000 COP/mes
+   - Inversión de desarrollo: $1.400.000 COP/mes (4 meses MVP = $5.600.000 COP)
+   - Presupuesto total estimado a 3 años: $12.590.000 COP
+   - Inversión de desarrollo inicial: $5.600.000 COP (4 meses)
+   - Tabulador de nuevos desarrollos: $1.400.000 COP/mes
 
 ### 📚 Historias de Usuario
 

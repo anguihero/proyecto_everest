@@ -26,6 +26,6 @@ El equipo de desarrollo (Andrés y Diego) y la contraparte de negocio (Óscar) s
 
 ## 🏢 3. Propiedad Intelectual del Software Desarrollado
 
-* **Titularidad:** Los derechos patrimoniales sobre el código fuente, bases de datos, manuales técnicos y parametrizaciones del juego pertenecen en un 100% a la personería jurídica u organización determinada por el Dueño de Producto (**Óscar**), una vez se liquide la totalidad del costo de desarrollo acordado ($4.800.000 COP por 4 meses de MVP, conforme al tabulador de $1.200.000 COP/mes).
+* **Titularidad:** Los derechos patrimoniales sobre el código fuente, bases de datos, manuales técnicos y parametrizaciones del juego pertenecen en un 100% a la personería jurídica u organización determinada por el Dueño de Producto (**Óscar**), una vez se liquide la totalidad del costo de desarrollo acordado ($5.600.000 COP por 4 meses de MVP, conforme al tabulador de $1.400.000 COP/mes).
 * **Reconocimiento Autoral:** Se reconoce el derecho moral de autoría sobre el diseño arquitectónico y de código a **Andrés Muñoz Sánchez** y sobre el diseño visual y analítica de producto a **Diego**.
 * **Uso de Tecnologías Abiertas:** La propiedad intelectual del desarrollo no restringe el uso de componentes de código abierto o software como servicio de terceros (Supabase, Google Gemini API, Tailwind CSS), los cuales se rigen bajo sus propias licencias de uso (MIT, Apache 2.0).

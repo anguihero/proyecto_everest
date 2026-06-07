@@ -81,23 +81,23 @@ everest-project/
   - ✅ Tratamiento de Datos Personales (Habeas Data - Ley 1581)
   - ✅ Políticas RLS y Guardrails de Gemini documentados
   - ✅ Cláusula de Propiedad Intelectual:
-    - Titularidad 100% a Óscar tras liquidación ($4.800.000 COP - 4 meses MVP a $1.200.000 COP/mes)
+    - Titularidad 100% a Óscar tras liquidación ($5.600.000 COP - 4 meses MVP a $1.400.000 COP/mes)
     - Reconocimiento de autoría moral a Andrés y Diego
   - ✅ Protección de datos sensibles (burnout, estrés, métricas psicométricas)
 
 ### 💰 Documentos Financieros (docs/03_financials/)
 
 - [x] **infrastructure_cost_analysis.md**
-  - ✅ Desarrollo de software: $1.200.000 COP/mes (4 meses MVP = $4.800.000 COP)
+  - ✅ Desarrollo de software: $1.400.000 COP/mes (4 meses MVP = $5.600.000 COP)
   - ✅ Costos operativos desglosados:
     - Supabase (Plan Pro): $100.000 COP/mes (Años 2-3)
     - Gemini API: $40.000 COP/mes
     - Hosting y dominios: $12.500 COP/mes
     - Soporte: $62.500 COP/mes (Años 2-3)
   - ✅ Tabla con columna de "Costo Mensual" agregada
-  - ✅ Proyección a 1 año: $5.430.000 COP
-  - ✅ Proyección a 3 años: $11.790.000 COP
-  - ✅ Tabulador de nuevos desarrollos: $1.200.000 COP/mes (igual a MVP)
+  - ✅ Proyección a 1 año: $6.230.000 COP
+  - ✅ Proyección a 3 años: $12.590.000 COP
+  - ✅ Tabulador de nuevos desarrollos: $1.400.000 COP/mes (igual a MVP)
   - ✅ Notas técnicas sobre TRM y escalabilidad incluidas
   - ✅ Sección de explicación de cálculos y correcciones
 
