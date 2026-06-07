@@ -9,8 +9,12 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ### ✅ Agregado
 
+- **Documentación Comercial**
+  - `propuesta_comercial_everest.md`: Documento de ventas completo con propuesta de valor, casos de uso (líder nuevo vs. consolidado), y workshop final de C3 mockup generado por IA
+  - Sección A4 WORKSHOP FINAL que describe proceso de validación visual en semana 7 usando agentes generativos para iterar diseño en tiempo real
+  
 - **Estructura inicial del repositorio**
-  - Carpetas de documentación: `docs/01_planning/`, `docs/02_governance/`, `docs/03_financials/`
+  - Carpetas de documentación: `docs/01_planning/`, `docs/02_governance/`, `docs/03_financials/`, `docs/04_sales/`
   - Carpetas de código fuente: `src/frontend/`, `src/backend/`
   
 - **Documentación Técnica Completa (SDD)**
@@ -38,8 +42,8 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 - **Documentos técnicos creados:** 5 (100% de la fase de planeación SDD)
 - **Cronograma planificado:** 12 semanas (5 semanas de levantamiento de HU + 7 semanas de diseño/desarrollo)
-- **Presupuesto total estimado a 3 años:** $9.000.000 COP
-- **Inversión de desarrollo inicial:** $2.000.000 COP
+- **Presupuesto total estimado a 3 años:** $9.390.000 COP
+- **Inversión de desarrollo inicial:** $2.400.000 COP
 
 ---
 

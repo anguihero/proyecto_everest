@@ -97,7 +97,7 @@ everest-project/
 
 5. **[Análisis de Costos de Infraestructura](03_financials/infrastructure_cost_analysis.md)**
    - Presupuesto detallado mensual y anual
-   - Inversión de desarrollo: $2.000.000 COP
+   - Inversión de desarrollo: $2.400.000 COP
    - Costos operativos (Supabase, Gemini API, Hosting, Soporte)
    - Proyección a 1 y 3 años
 
