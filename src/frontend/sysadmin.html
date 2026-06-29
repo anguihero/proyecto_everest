@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Everest Experience — Panel del Sistema">
+  <meta name="robots" content="noindex">
+  <title>SysAdmin — Everest Experience</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ev-green': '#2E7D32',
+            'ev-dark':  '#1B5E20',
+            'ev-gold':  '#FFB300',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="h-full bg-gray-50 font-sans">
+
+  <!-- ══════════ BARRA DE NAVEGACIÓN ══════════ -->
+  <nav class="bg-gray-900 shadow-md" aria-label="Navegación principal">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="text-white font-bold tracking-wide text-lg select-none">EVEREST EXPERIENCE</span>
+        <span class="text-xs font-semibold bg-red-600 text-white px-2 py-0.5 rounded-full">Sistema</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="results-library.html"
+           class="text-sm text-gray-300 hover:text-white font-semibold">
+          Resultados
+        </a>
+        <div class="text-right hidden sm:block">
+          <p id="user-name" class="text-white text-sm font-semibold">Cargando…</p>
+          <p class="text-gray-400 text-xs">SysAdmin</p>
+        </div>
+        <button id="btn-logout" type="button"
+                class="text-sm text-gray-400 hover:text-white
+                       focus:outline-none focus:ring-1 focus:ring-white rounded px-2 py-1
+                       transition-colors"
+                aria-label="Cerrar sesión">
+          Salir
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════ TABS ══════════ -->
+  <div class="bg-white border-b border-gray-200 sticky top-0 z-10" role="tablist" aria-label="Secciones del sistema">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex gap-1">
+      <button role="tab" aria-selected="true"  aria-controls="tab-overview"
+              class="tab-btn border-b-2 border-gray-900 text-gray-900 px-4 py-3 text-sm font-semibold
+                     focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-inset"
+              data-tab="overview">
+        Resumen
+      </button>
+      <button role="tab" aria-selected="false" aria-controls="tab-orgs"
+              class="tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 px-4 py-3
+                     text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-inset"
+              data-tab="orgs">
+        Organizaciones
+      </button>
+      <button role="tab" aria-selected="false" aria-controls="tab-users"
+              class="tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 px-4 py-3
+                     text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-inset"
+              data-tab="users">
+        Usuarios
+      </button>
+      <button role="tab" aria-selected="false" aria-controls="tab-catalog"
+              class="tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 px-4 py-3
+                     text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-inset"
+              data-tab="catalog">
+        Catálogo
+      </button>
+      <button role="tab" aria-selected="false" aria-controls="tab-audit"
+              class="tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 px-4 py-3
+                     text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-inset"
+              data-tab="audit">
+        Auditoría
+      </button>
+      <button role="tab" aria-selected="false" aria-controls="tab-bank"
+              class="tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 px-4 py-3
+                     text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-inset"
+              data-tab="bank">
+        Banco de Preguntas
+      </button>
+      <button role="tab" aria-selected="false" aria-controls="tab-fabrica"
+              class="tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 px-4 py-3
+                     text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-inset"
+              data-tab="fabrica">
+        🏭 Fábrica
+      </button>
+    </div>
+  </div>
+
+  <!-- ══════════ CONTENIDO ══════════ -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+
+    <!-- Error global -->
+    <div id="error-global" role="alert" aria-live="assertive"
+         class="hidden mb-6 px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+    </div>
+
+    <!-- ── TAB: USUARIOS ── -->
+    <div id="tab-users" role="tabpanel" aria-label="Usuarios del sistema" class="hidden">
+      <div class="mb-6">
+        <h2 class="text-xl font-bold text-gray-900">Usuarios del sistema</h2>
+        <p class="text-sm text-gray-500 mt-0.5">Gestión global de credenciales por SysAdmin.</p>
+      </div>
+      <div id="system-users-loading" class="text-sm text-gray-400 py-10 text-center">Cargando usuarios…</div>
+      <div id="system-users-list" class="hidden space-y-3"></div>
+    </div>
+
+    <!-- ── TAB: RESUMEN ── -->
+    <div id="tab-overview" role="tabpanel" aria-label="Resumen del sistema">
+
+      <h1 class="text-xl font-bold text-gray-900 mb-6">Resumen del sistema</h1>
+
+      <!-- Tarjetas de métricas -->
+      <div id="stats-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+        <div class="stat-card bg-white rounded-xl border border-gray-200 p-5 animate-pulse">
+          <div class="h-8 bg-gray-300 rounded w-1/2 mb-2"></div>
+          <div class="h-3 bg-gray-200 rounded w-3/4"></div>
+        </div>
+        <div class="stat-card bg-white rounded-xl border border-gray-200 p-5 animate-pulse">
+          <div class="h-8 bg-gray-300 rounded w-1/3 mb-2"></div>
+          <div class="h-3 bg-gray-200 rounded w-2/3"></div>
+        </div>
+        <div class="stat-card bg-white rounded-xl border border-gray-200 p-5 animate-pulse">
+          <div class="h-8 bg-gray-300 rounded w-1/2 mb-2"></div>
+          <div class="h-3 bg-gray-200 rounded w-3/4"></div>
+        </div>
+        <div class="stat-card bg-white rounded-xl border border-gray-200 p-5 animate-pulse">
+          <div class="h-8 bg-gray-300 rounded w-2/5 mb-2"></div>
+          <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+        </div>
+      </div>
+
+      <!-- Últimas organizaciones -->
+      <h2 class="text-base font-semibold text-gray-800 mb-3">Organizaciones recientes</h2>
+      <div id="recent-orgs" class="bg-white rounded-xl border border-gray-200 overflow-hidden mb-8">
+        <div class="p-8 text-center animate-pulse">
+          <div class="h-4 bg-gray-200 rounded w-1/3 mx-auto"></div>
+        </div>
+      </div>
+
+      <!-- Últimos eventos de auditoría -->
+      <h2 class="text-base font-semibold text-gray-800 mb-3">Actividad reciente</h2>
+      <div id="recent-audit" class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div class="p-8 text-center animate-pulse">
+          <div class="h-4 bg-gray-200 rounded w-1/4 mx-auto"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: ORGANIZACIONES ── -->
+    <div id="tab-orgs" role="tabpanel" aria-label="Organizaciones del sistema" class="hidden">
+
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-xl font-bold text-gray-900">Organizaciones</h2>
+          <p class="text-sm text-gray-500 mt-0.5">Todos los tenants registrados en el sistema.</p>
+        </div>
+      </div>
+
+      <div id="orgs-loading" aria-live="polite">
+        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden animate-pulse">
+          <div class="p-4 border-b"><div class="h-4 bg-gray-200 rounded w-1/4"></div></div>
+          <div class="divide-y divide-gray-100">
+            <div class="p-4 flex gap-4"><div class="h-4 bg-gray-200 rounded w-1/3"></div><div class="h-4 bg-gray-100 rounded w-1/6 ml-8"></div></div>
+            <div class="p-4 flex gap-4"><div class="h-4 bg-gray-200 rounded w-1/4"></div><div class="h-4 bg-gray-100 rounded w-1/6 ml-8"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="orgs-table" class="hidden bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm" aria-label="Tabla de organizaciones">
+            <thead>
+              <tr class="bg-gray-50 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                <th scope="col" class="text-left px-4 py-3">Organización</th>
+                <th scope="col" class="text-left px-4 py-3">Slug</th>
+                <th scope="col" class="text-left px-4 py-3">Estado</th>
+                <th scope="col" class="text-left px-4 py-3 hidden md:table-cell">Creada</th>
+              </tr>
+            </thead>
+            <tbody id="orgs-tbody" class="divide-y divide-gray-100">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: CATÁLOGO DE EXPERIENCIAS ── -->
+    <div id="tab-catalog" role="tabpanel" aria-label="Catálogo de experiencias" class="hidden">
+
+      <div class="mb-6">
+        <h2 class="text-xl font-bold text-gray-900">Catálogo de Experiencias</h2>
+        <p class="text-sm text-gray-500 mt-0.5">Definiciones y versiones publicadas de los casetes.</p>
+      </div>
+
+      <div id="catalog-loading" aria-live="polite">
+        <div class="space-y-4">
+          <div class="bg-white rounded-xl border border-gray-200 p-5 animate-pulse">
+            <div class="h-4 bg-gray-300 rounded w-1/3 mb-3"></div>
+            <div class="h-3 bg-gray-200 rounded w-1/2 mb-2"></div>
+            <div class="h-3 bg-gray-200 rounded w-1/4"></div>
+          </div>
+          <div class="bg-white rounded-xl border border-gray-200 p-5 animate-pulse">
+            <div class="h-4 bg-gray-300 rounded w-1/4 mb-3"></div>
+            <div class="h-3 bg-gray-200 rounded w-2/5 mb-2"></div>
+            <div class="h-3 bg-gray-200 rounded w-1/3"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="catalog-list" class="hidden space-y-4"></div>
+
+      <div id="catalog-empty" class="hidden text-center py-12 text-gray-400 text-sm">
+        No hay experiencias publicadas. Crea y publica casetes desde la CLI de Supabase.
+      </div>
+    </div>
+
+    <!-- ── TAB: AUDITORÍA ── -->
+    <div id="tab-audit" role="tabpanel" aria-label="Registro de auditoría" class="hidden">
+
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-xl font-bold text-gray-900">Registro de Auditoría</h2>
+          <p class="text-sm text-gray-500 mt-0.5">
+            Eventos del sistema sin PII. Los últimos 200 eventos.
+          </p>
+        </div>
+      </div>
+
+      <div id="audit-loading" aria-live="polite">
+        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden animate-pulse">
+          <div class="divide-y divide-gray-100">
+            <div class="p-4 flex gap-4"><div class="h-3 bg-gray-200 rounded w-1/6"></div><div class="h-3 bg-gray-200 rounded w-1/4 ml-4"></div><div class="h-3 bg-gray-200 rounded w-1/3 ml-4"></div></div>
+            <div class="p-4 flex gap-4"><div class="h-3 bg-gray-200 rounded w-1/6"></div><div class="h-3 bg-gray-200 rounded w-1/5 ml-4"></div><div class="h-3 bg-gray-200 rounded w-1/4 ml-4"></div></div>
+            <div class="p-4 flex gap-4"><div class="h-3 bg-gray-200 rounded w-1/6"></div><div class="h-3 bg-gray-200 rounded w-1/3 ml-4"></div><div class="h-3 bg-gray-200 rounded w-1/5 ml-4"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="audit-table" class="hidden bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm" aria-label="Registro de auditoría">
+            <thead>
+              <tr class="bg-gray-50 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                <th scope="col" class="text-left px-4 py-3">Acción</th>
+                <th scope="col" class="text-left px-4 py-3 hidden sm:table-cell">Actor</th>
+                <th scope="col" class="text-left px-4 py-3">Rol</th>
+                <th scope="col" class="text-left px-4 py-3 hidden md:table-cell">Timestamp</th>
+              </tr>
+            </thead>
+            <tbody id="audit-tbody" class="divide-y divide-gray-100">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="audit-empty" class="hidden text-center py-12 text-gray-400 text-sm">
+        No hay eventos de auditoría registrados.
+      </div>
+    </div>
+
+    <!-- ── TAB: BANCO DE PREGUNTAS ── -->
+    <div id="tab-bank" role="tabpanel" aria-label="Banco de preguntas DISC" class="hidden">
+
+      <!-- Sub-nav interno -->
+      <div class="flex gap-4 border-b border-gray-200 mb-6">
+        <button type="button" class="bank-tab-btn pb-2 border-b-2 border-gray-900 text-gray-900 text-sm font-semibold"
+                data-bank-tab="questions">Preguntas</button>
+        <button type="button" class="bank-tab-btn pb-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 text-sm font-semibold"
+                data-bank-tab="compositions">Composición de Reto</button>
+        <button type="button" class="bank-tab-btn pb-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 text-sm font-semibold"
+                data-bank-tab="publish">Publicar Versión</button>
+      </div>
+
+      <!-- ── SUB-TAB: PREGUNTAS ── -->
+      <div id="bank-questions" class="bank-tab-content">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-bold text-gray-900">Preguntas del banco</h2>
+          <button type="button" id="btn-new-question"
+                  class="bg-ev-green text-white text-sm px-4 py-2 rounded-lg hover:bg-ev-dark transition-colors">
+            + Nueva pregunta
+          </button>
+        </div>
+        <div id="questions-list" class="space-y-2">
+          <p class="text-gray-400 text-sm">Cargando…</p>
+        </div>
+      </div>
+
+      <!-- ── SUB-TAB: COMPOSICIÓN ── -->
+      <div id="bank-compositions" class="bank-tab-content hidden">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-bold text-gray-900">Composición — Expedición Base</h2>
+          <span class="text-xs text-gray-400">sort_order define el orden canonical</span>
+        </div>
+        <div id="compositions-list" class="space-y-2">
+          <p class="text-gray-400 text-sm">Cargando…</p>
+        </div>
+      </div>
+
+      <!-- ── SUB-TAB: PUBLICAR ── -->
+      <div id="bank-publish" class="bank-tab-content hidden">
+        <div class="max-w-lg">
+          <h2 class="text-lg font-bold text-gray-900 mb-2">Publicar nueva versión</h2>
+          <p class="text-sm text-gray-500 mb-6">
+            Ensambla el contenido y las reglas de scoring desde el banco de preguntas actual
+            y crea una nueva versión publicada. Las asignaciones activas se migran automáticamente.
+          </p>
+          <div class="bg-white border rounded-xl p-5 space-y-4">
+            <div>
+              <label for="pub-experience" class="block text-sm font-medium text-gray-700 mb-1">Reto</label>
+              <select id="pub-experience" aria-label="Reto a publicar"
+                      class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-ev-green outline-none">
+                <option value="b0000000-0000-0000-0000-000000000001">Expedición Base</option>
+              </select>
+            </div>
+            <div>
+              <label for="pub-version-label" class="block text-sm font-medium text-gray-700 mb-1">
+                Etiqueta de versión <span class="text-gray-400">(opcional — auto si vacío)</span>
+              </label>
+              <input id="pub-version-label" type="text" placeholder="ej. 2.1.0" aria-label="Etiqueta de versión (opcional)"
+                     class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-ev-green outline-none">
+            </div>
+            <div id="pub-error"   class="hidden text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2"></div>
+            <div id="pub-success" class="hidden text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg px-3 py-2"></div>
+            <button type="button" id="btn-assemble"
+                    class="w-full bg-ev-green text-white font-semibold py-2.5 rounded-lg hover:bg-ev-dark transition-colors">
+              Ensamblar y publicar
+            </button>
+          </div>
+          <div class="mt-6">
+            <h3 class="text-sm font-semibold text-gray-600 mb-3">Versiones existentes</h3>
+            <div id="versions-list" class="space-y-2 text-sm text-gray-400">Cargando…</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-bank -->
+
+    <!-- ── TAB: FÁBRICA DE CONTENIDO ── -->
+    <div id="tab-fabrica" role="tabpanel" aria-label="Fábrica de contenido" class="hidden">
+
+      <div class="mb-6 flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <h2 class="text-xl font-bold text-gray-900">Fábrica de Contenido</h2>
+          <p class="text-sm text-gray-500 mt-0.5">Crea y publica retos, preguntas y metodologías sin tocar SQL.</p>
+        </div>
+      </div>
+
+      <!-- Sub-tabs Fábrica -->
+      <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
+        <div class="flex border-b border-gray-200 bg-gray-50" role="tablist" aria-label="Secciones de fábrica">
+          <button type="button" role="tab" class="fab-tab-btn px-5 py-3 text-sm font-semibold border-b-2 border-ev-green text-ev-green focus:outline-none"
+                  data-fabtab="tipos" aria-selected="true" aria-controls="fabtab-tipos">Tipos de Reto</button>
+          <button type="button" role="tab" class="fab-tab-btn px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700 focus:outline-none"
+                  data-fabtab="retos" aria-selected="false" aria-controls="fabtab-retos">Retos</button>
+          <button type="button" role="tab" class="fab-tab-btn px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700 focus:outline-none"
+                  data-fabtab="preguntas" aria-selected="false" aria-controls="fabtab-preguntas">Preguntas</button>
+          <button type="button" role="tab" class="fab-tab-btn px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700 focus:outline-none"
+                  data-fabtab="composicion" aria-selected="false" aria-controls="fabtab-composicion">Composición</button>
+        </div>
+
+        <div class="p-6">
+
+          <!-- Sub-panel: Tipos de Reto -->
+          <div id="fabtab-tipos">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-semibold text-gray-900">Metodologías disponibles</h3>
+            </div>
+            <div id="fab-tipos-loading" class="text-sm text-gray-400 py-8 text-center">Cargando tipos…</div>
+            <div id="fab-tipos-list" class="hidden space-y-3"></div>
+          </div>
+
+          <!-- Sub-panel: Retos -->
+          <div id="fabtab-retos" class="hidden">
+            <div class="flex items-center justify-between mb-4 flex-wrap gap-3">
+              <h3 class="font-semibold text-gray-900">Retos disponibles</h3>
+              <button type="button" id="fab-btn-new-reto"
+                      class="text-sm bg-ev-green text-white px-4 py-2 rounded-lg font-semibold hover:bg-ev-dark transition-colors">
+                + Nuevo reto
+              </button>
+            </div>
+            <div id="fab-retos-loading" class="text-sm text-gray-400 py-8 text-center">Cargando retos…</div>
+            <div id="fab-retos-list" class="hidden space-y-3"></div>
+
+            <!-- Formulario nuevo reto (oculto por defecto) -->
+            <div id="fab-form-reto" class="hidden mt-6 bg-gray-50 rounded-xl p-5 border border-gray-200">
+              <h4 class="font-semibold text-gray-900 mb-4">Nuevo reto</h4>
+              <div class="space-y-4">
+                <div>
+                  <label for="fab-reto-type" class="block text-sm font-semibold text-gray-700 mb-1">Metodología</label>
+                  <select id="fab-reto-type" aria-label="Metodología del reto" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ev-green">
+                    <option value="">Seleccionar…</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-1">Nombre del reto</label>
+                  <input id="fab-reto-name" type="text" placeholder="Ej: Fortalezas en Conflicto"
+                         class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ev-green"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-1">Descripción</label>
+                  <textarea id="fab-reto-desc" rows="2" placeholder="Descripción breve visible en el Hub…"
+                            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ev-green resize-none"></textarea>
+                </div>
+                <div>
+                  <label for="fab-reto-anim" class="block text-sm font-semibold text-gray-700 mb-1">Animación en el runner</label>
+                  <select id="fab-reto-anim" aria-label="Tipo de animación en el runner" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ev-green">
+                    <option value="tv_static">TV Sintonizando (por defecto)</option>
+                    <option value="pixel_climber">Escalador Pixel Art — Aconcagua</option>
+                    <option value="none">Sin animación</option>
+                  </select>
+                </div>
+                <div id="fab-reto-error" class="hidden text-sm text-red-600"></div>
+                <div class="flex gap-3">
+                  <button type="button" id="fab-btn-save-reto"
+                          class="bg-ev-green text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-ev-dark transition-colors">
+                    Guardar reto
+                  </button>
+                  <button type="button" id="fab-btn-cancel-reto"
+                          class="text-gray-500 hover:text-gray-700 px-4 py-2 text-sm">Cancelar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-panel: Preguntas -->
+          <div id="fabtab-preguntas" class="hidden">
+            <div class="flex items-center justify-between mb-4 flex-wrap gap-3">
+              <div class="flex items-center gap-3">
+                <h3 class="font-semibold text-gray-900">Banco de preguntas</h3>
+                <select id="fab-filter-type" aria-label="Filtrar por metodología" class="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-ev-green">
+                  <option value="">Todas las metodologías</option>
+                </select>
+              </div>
+              <button type="button" id="fab-btn-new-question"
+                      class="text-sm bg-ev-green text-white px-4 py-2 rounded-lg font-semibold hover:bg-ev-dark transition-colors">
+                + Nueva pregunta
+              </button>
+            </div>
+            <div id="fab-questions-loading" class="text-sm text-gray-400 py-8 text-center">Selecciona una metodología para ver las preguntas.</div>
+            <div id="fab-questions-list" class="hidden space-y-2"></div>
+
+            <!-- Formulario nueva pregunta -->
+            <div id="fab-form-question" class="hidden mt-6 bg-gray-50 rounded-xl p-5 border border-gray-200">
+              <h4 class="font-semibold text-gray-900 mb-4">Nueva pregunta</h4>
+              <div class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label for="fab-q-type" class="block text-sm font-semibold text-gray-700 mb-1">Metodología</label>
+                    <select id="fab-q-type" aria-label="Metodología de la pregunta" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ev-green">
+                      <option value="">Seleccionar…</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="fab-q-difficulty" class="block text-sm font-semibold text-gray-700 mb-1">Dificultad</label>
+                    <select id="fab-q-difficulty" aria-label="Dificultad de la pregunta" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ev-green">
+                      <option value="1">Fácil</option>
+                      <option value="2" selected>Medio</option>
+                      <option value="3">Difícil</option>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-1">Título de la pregunta</label>
+                  <input id="fab-q-title" type="text" placeholder="Ej: Decisión bajo presión"
+                         class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ev-green"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-1">Escenario</label>
+                  <textarea id="fab-q-text" rows="3" placeholder="Describe la situación de liderazgo…"
+                            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ev-green resize-none"></textarea>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-1">Notas de framework <span class="font-normal text-gray-400">(internas)</span></label>
+                  <input id="fab-q-framework" type="text" placeholder="Ej: Activa dimensión D — urgencia y control"
+                         class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ev-green"/>
+                </div>
+
+                <!-- 4 opciones -->
+                <div>
+                  <p class="text-sm font-semibold text-gray-700 mb-3">Opciones de respuesta (4)</p>
+                  <div id="fab-options-container" class="space-y-4">
+                    <!-- Se genera dinámicamente por JS según metodología -->
+                  </div>
+                </div>
+
+                <div id="fab-q-error" class="hidden text-sm text-red-600"></div>
+                <div class="flex gap-3">
+                  <button type="button" id="fab-btn-save-question"
+                          class="bg-ev-green text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-ev-dark transition-colors">
+                    Guardar pregunta
+                  </button>
+                  <button type="button" id="fab-btn-cancel-question"
+                          class="text-gray-500 hover:text-gray-700 px-4 py-2 text-sm">Cancelar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-panel: Composición -->
+          <div id="fabtab-composicion" class="hidden">
+            <div class="flex items-center gap-3 mb-4 flex-wrap">
+              <h3 class="font-semibold text-gray-900">Componer reto</h3>
+              <select id="fab-comp-reto" aria-label="Seleccionar reto a componer" class="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-ev-green">
+                <option value="">Seleccionar reto…</option>
+              </select>
+            </div>
+
+            <div id="fab-comp-loading" class="text-sm text-gray-400 py-8 text-center">Selecciona un reto para ver su composición.</div>
+
+            <div id="fab-comp-content" class="hidden">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Preguntas en el reto -->
+                <div>
+                  <p class="text-sm font-semibold text-gray-700 mb-2">
+                    En este reto (<span id="fab-comp-count">0</span> preguntas)
+                  </p>
+                  <div id="fab-comp-included" class="space-y-2 max-h-96 overflow-y-auto"></div>
+                </div>
+                <!-- Preguntas disponibles para agregar -->
+                <div>
+                  <p class="text-sm font-semibold text-gray-700 mb-2">Disponibles para agregar</p>
+                  <div id="fab-comp-available" class="space-y-2 max-h-96 overflow-y-auto"></div>
+                </div>
+              </div>
+
+              <!-- Publicar versión -->
+              <div class="mt-6 pt-5 border-t border-gray-200 flex items-center justify-between gap-4">
+                <div>
+                  <p class="text-sm font-semibold text-gray-900">Publicar nueva versión</p>
+                  <p class="text-xs text-gray-500 mt-0.5">Genera un casete inmutable desde la composición actual.</p>
+                </div>
+                <button type="button" id="fab-btn-publish"
+                        class="bg-ev-gold text-gray-900 px-6 py-2.5 rounded-lg text-sm font-bold hover:bg-amber-400 transition-colors">
+                  Publicar versión →
+                </button>
+              </div>
+              <div id="fab-publish-result" class="hidden mt-3 text-sm rounded-lg px-4 py-3"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- /tab-fabrica -->
+
+  </main>
+
+  <!-- MODAL: CAMBIAR CONTRASEÑA -->
+  <div id="modal-password" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div id="modal-password-backdrop" class="absolute inset-0 bg-black/50"></div>
+    <div class="relative bg-white rounded-2xl shadow-xl w-full max-w-md p-6 z-10">
+      <h2 class="text-lg font-bold text-gray-900">Cambiar contraseña</h2>
+      <p id="password-target-name" class="text-sm text-gray-500 mt-1 mb-5"></p>
+      <form id="form-password">
+        <input id="password-target-id" type="hidden">
+        <label for="new-password" class="block text-sm font-semibold text-gray-700 mb-1">Nueva contraseña</label>
+        <input id="new-password" type="password" minlength="12" required autocomplete="new-password"
+               class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-gray-900">
+        <p class="text-xs text-gray-400 mt-2">Mínimo 12 caracteres, mayúscula, minúscula, número y símbolo.</p>
+        <label for="confirm-password" class="block text-sm font-semibold text-gray-700 mt-4 mb-1">Confirmar contraseña</label>
+        <input id="confirm-password" type="password" minlength="12" required autocomplete="new-password"
+               class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-gray-900">
+        <div id="password-error" class="hidden mt-4 p-3 text-sm text-red-700 bg-red-50 rounded-lg"></div>
+        <div id="password-success" class="hidden mt-4 p-3 text-sm text-green-700 bg-green-50 rounded-lg"></div>
+        <div class="flex gap-3 mt-5">
+          <button id="btn-submit-password" class="flex-1 bg-gray-900 text-white rounded-lg py-2.5 font-semibold">Cambiar</button>
+          <button id="btn-cancel-password" type="button" class="flex-1 bg-gray-100 text-gray-700 rounded-lg py-2.5 font-semibold">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       MODAL: PREGUNTA (crear / editar)
+  ═══════════════════════════════════════════════ -->
+  <div id="modal-question" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div id="modal-question-backdrop" class="absolute inset-0 bg-black/50"></div>
+    <div class="relative bg-white rounded-2xl shadow-xl w-full max-w-lg p-6 z-10 overflow-y-auto max-h-[90vh]">
+      <h2 id="modal-q-title" class="text-lg font-bold text-gray-800 mb-4">Nueva pregunta</h2>
+      <form id="form-question" class="space-y-4">
+        <input type="hidden" id="q-id">
+        <div>
+          <label for="q-title" class="block text-sm font-medium text-gray-700 mb-1">Título corto (para admin)</label>
+          <input id="q-title" type="text" required maxlength="120" aria-label="Título corto de la pregunta"
+                 class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-ev-green outline-none">
+        </div>
+        <div>
+          <label for="q-text" class="block text-sm font-medium text-gray-700 mb-1">Texto del escenario</label>
+          <textarea id="q-text" required rows="4" maxlength="800" aria-label="Texto del escenario de la pregunta"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-ev-green outline-none resize-none"></textarea>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="q-difficulty" class="block text-sm font-medium text-gray-700 mb-1">Dificultad</label>
+            <select id="q-difficulty" aria-label="Dificultad de la pregunta"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-ev-green outline-none">
+              <option value="1">1 — Fácil</option>
+              <option value="2" selected>2 — Medio</option>
+              <option value="3">3 — Difícil</option>
+            </select>
+          </div>
+          <div>
+            <label for="q-time" class="block text-sm font-medium text-gray-700 mb-1">Tiempo prom. (seg)</label>
+            <input id="q-time" type="number" min="10" max="300" value="60" aria-label="Tiempo promedio de respuesta en segundos"
+                   class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-ev-green outline-none">
+          </div>
+        </div>
+        <div>
+          <label for="q-notes" class="block text-sm font-medium text-gray-700 mb-1">Notas de contexto</label>
+          <input id="q-notes" type="text" maxlength="200" placeholder="¿Qué dimensión explora?" aria-label="Notas de contexto de la pregunta"
+                 class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-ev-green outline-none">
+        </div>
+        <div id="modal-q-error" class="hidden text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2"></div>
+        <div class="flex gap-3 pt-2">
+          <button type="button" id="btn-cancel-question"
+                  class="flex-1 border border-gray-300 text-gray-700 py-2 rounded-lg text-sm hover:bg-gray-50">
+            Cancelar
+          </button>
+          <button type="submit"
+                  class="flex-1 bg-ev-green text-white py-2 rounded-lg text-sm font-medium hover:bg-ev-dark">
+            Guardar pregunta
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       MODAL: OPCIÓN (crear / editar)
+  ═══════════════════════════════════════════════ -->
+  <div id="modal-option" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div id="modal-option-backdrop" class="absolute inset-0 bg-black/50"></div>
+    <div class="relative bg-white rounded-2xl shadow-xl w-full max-w-lg p-6 z-10 overflow-y-auto max-h-[90vh]">
+      <h2 id="modal-opt-title" class="text-lg font-bold text-gray-800 mb-4">Nueva opción</h2>
+      <form id="form-option" class="space-y-4">
+        <input type="hidden" id="opt-id">
+        <input type="hidden" id="opt-question-id">
+        <div>
+          <label for="opt-text" class="block text-sm font-medium text-gray-700 mb-1">Texto de la opción</label>
+          <textarea id="opt-text" required rows="3" maxlength="400" aria-label="Texto de la opción de respuesta"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-ev-green outline-none resize-none"></textarea>
+        </div>
+        <div>
+          <label for="opt-feedback" class="block text-sm font-medium text-gray-700 mb-1">Retroalimentación (Sherpa)</label>
+          <textarea id="opt-feedback" rows="2" maxlength="400" aria-label="Retroalimentación del Sherpa para esta opción"
+                    class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-ev-green outline-none resize-none"></textarea>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            Pesos DISC <span class="text-gray-400 font-normal">(deben sumar 1.00)</span>
+          </label>
+          <div class="grid grid-cols-4 gap-2 text-center">
+            <div>
+              <div class="text-xs font-bold text-red-600 mb-1">D</div>
+              <input id="opt-disc-d" type="number" step="0.01" min="0" max="1" value="0.25" aria-label="Peso DISC Dominancia"
+                     class="w-full border border-red-200 rounded px-1 py-0.5 text-center text-sm">
+            </div>
+            <div>
+              <div class="text-xs font-bold text-yellow-600 mb-1">I</div>
+              <input id="opt-disc-i" type="number" step="0.01" min="0" max="1" value="0.25" aria-label="Peso DISC Influencia"
+                     class="w-full border border-yellow-200 rounded px-1 py-0.5 text-center text-sm">
+            </div>
+            <div>
+              <div class="text-xs font-bold text-green-600 mb-1">S</div>
+              <input id="opt-disc-s" type="number" step="0.01" min="0" max="1" value="0.25" aria-label="Peso DISC Estabilidad"
+                     class="w-full border border-green-200 rounded px-1 py-0.5 text-center text-sm">
+            </div>
+            <div>
+              <div class="text-xs font-bold text-blue-600 mb-1">C</div>
+              <input id="opt-disc-c" type="number" step="0.01" min="0" max="1" value="0.25" aria-label="Peso DISC Conformidad"
+                     class="w-full border border-blue-200 rounded px-1 py-0.5 text-center text-sm">
+            </div>
+          </div>
+          <p id="disc-sum-display" class="text-xs text-center mt-1 text-gray-500">Suma: 1.00</p>
+        </div>
+        <div>
+          <label for="opt-sort-order" class="block text-sm font-medium text-gray-700 mb-1">Sort order</label>
+          <input id="opt-sort-order" type="number" min="0" max="99" value="0" aria-label="Orden de visualización de la opción"
+                 class="w-24 border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-ev-green outline-none">
+        </div>
+        <div id="modal-opt-error" class="hidden text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2"></div>
+        <div class="flex gap-3 pt-2">
+          <button type="button" id="btn-cancel-option"
+                  class="flex-1 border border-gray-300 text-gray-700 py-2 rounded-lg text-sm hover:bg-gray-50">
+            Cancelar
+          </button>
+          <button type="submit"
+                  class="flex-1 bg-ev-green text-white py-2 rounded-lg text-sm font-medium hover:bg-ev-dark">
+            Guardar opción
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ══════════ PIE DE PÁGINA ══════════ -->
+  <footer class="text-center py-8 text-xs text-gray-400">
+    Everest Experience · Panel del Sistema · Uso restringido a SysAdmin autorizado
+  </footer>
+
+  <script type="module">
+    import { initSysAdmin } from './js/sysadmin.js';
+    initSysAdmin();
+  </script>
+
+</body>
+</html>

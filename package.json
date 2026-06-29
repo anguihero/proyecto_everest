@@ -1,0 +1,17 @@
+{
+  "name": "everest-experience",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Everest Experience — plataforma B2B de diagnóstico de liderazgo",
+  "scripts": {
+    "start": "npx serve src/frontend -p 59871 --no-clipboard",
+    "start:py": "python -m http.server 59871 --directory src/frontend",
+    "seed:users": "node src/backend/supabase/seed/seed_users.mjs",
+    "test": "node --test test/*.test.mjs",
+    "test:e2e": "playwright test"
+  },
+  "private": true,
+  "devDependencies": {
+    "@playwright/test": "^1.61.1"
+  }
+}

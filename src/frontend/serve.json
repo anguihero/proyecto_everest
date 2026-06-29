@@ -1,0 +1,15 @@
+{
+  "cleanUrls": false,
+  "directoryListing": false,
+  "rewrites": [
+    { "source": "/",           "destination": "/index.html"      },
+    { "source": "/hub",        "destination": "/hub.html"        },
+    { "source": "/login",      "destination": "/index.html"      },
+    { "source": "/runner",     "destination": "/runner.html"     },
+    { "source": "/results",    "destination": "/results.html"    },
+    { "source": "/onboarding", "destination": "/onboarding.html" },
+    { "source": "/consent",    "destination": "/consent.html"    },
+    { "source": "/admin",      "destination": "/admin.html"      },
+    { "source": "/sysadmin",   "destination": "/sysadmin.html"   }
+  ]
+}

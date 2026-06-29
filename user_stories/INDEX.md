@@ -265,3 +265,8 @@ Según el cronograma del proyecto (12 semanas), las siguientes HU deben ser crea
 
 **Este índice se actualiza después de cada cambio en las historias de usuario.**  
 **Última revisión:** 2026-06-07 por Andrés Muñoz Sánchez
+> **Backlog vigente propuesto para el MVP modular (2026-06-28):**
+> [`mvp_modular/INDEX_MVP_MODULAR.md`](mvp_modular/INDEX_MVP_MODULAR.md) y
+> [`mvp_modular/MASTER_REQUERIMIENTOS_MVP.md`](mvp_modular/MASTER_REQUERIMIENTOS_MVP.md).
+> El inventario legado de este archivo se conserva temporalmente para trazabilidad
+> hasta aprobar su migración o retiro.

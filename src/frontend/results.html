@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>Tu Perfil — Everest Experience</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ev-green': '#2E7D32',
+            'ev-dark':  '#1B5E20',
+            'ev-gold':  '#FFB300',
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration:0.01ms!important; transition-duration:0.01ms!important; }
+    }
+  </style>
+</head>
+
+<body class="h-full bg-gray-50 font-sans">
+
+  <!-- ══════════ NAVBAR ══════════ -->
+  <nav class="bg-ev-green shadow-md" aria-label="Navegación">
+    <div class="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
+      <span class="text-white font-bold tracking-wide text-sm select-none">EVEREST EXPERIENCE</span>
+      <button id="btn-logout" type="button"
+              class="text-white/70 hover:text-white text-xs font-semibold
+                     focus:outline-none focus:ring-1 focus:ring-white rounded px-2 py-1 transition-colors">
+        Salir
+      </button>
+    </div>
+  </nav>
+
+  <main class="max-w-2xl mx-auto px-4 py-8 sm:py-12">
+
+    <!-- ══════════ CARGANDO ══════════ -->
+    <div id="loading-state" class="flex flex-col items-center justify-center py-24">
+      <div class="w-10 h-10 rounded-full border-4 border-ev-green/20 border-t-ev-green animate-spin mb-4"
+           role="status" aria-label="Calculando perfil"></div>
+      <p class="text-gray-400 text-sm">Cargando tu perfil…</p>
+    </div>
+
+    <!-- ══════════ ERROR ══════════ -->
+    <div id="error-state" class="hidden text-center py-24">
+      <p class="text-5xl mb-4">⛰️</p>
+      <p id="error-message" class="text-gray-500 text-sm mb-6"></p>
+      <a id="btn-hub-error" href="hub.html"
+         class="inline-block px-6 py-3 bg-ev-green text-white rounded-xl font-semibold text-sm
+                hover:bg-ev-dark transition-colors focus:outline-none focus:ring-2 focus:ring-ev-green">
+        Volver al Hub
+      </a>
+    </div>
+
+    <!-- ══════════ RESULTADOS ══════════ -->
+    <div id="results-content" class="hidden">
+
+      <!-- Cabecera de logro -->
+      <div class="text-center mb-10">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full
+                    bg-ev-gold/20 text-ev-gold text-3xl mb-4" aria-hidden="true">
+          🏔️
+        </div>
+        <p class="text-xs font-semibold text-ev-green uppercase tracking-widest mb-1">
+          Cima alcanzada
+        </p>
+        <h1 class="text-2xl sm:text-3xl font-black text-gray-900 mb-1">
+          Tu perfil de liderazgo
+        </h1>
+        <p id="experience-name" class="text-sm text-gray-400 font-medium"></p>
+        <p id="completed-date" class="text-xs text-gray-300 mt-1"></p>
+      </div>
+
+      <!-- Perfil primario -->
+      <div id="primary-profile"
+           class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-6">
+        <!-- Se inyecta dinámicamente -->
+      </div>
+
+      <!-- Radar + distribución textual DISC -->
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-6">
+        <h2 class="text-sm font-bold text-gray-700 mb-5 uppercase tracking-wider">
+          Distribución de dimensiones
+        </h2>
+        <div class="grid md:grid-cols-2 gap-6 items-center">
+          <div id="disc-radar" class="flex justify-center">
+            <!-- SVG accesible inyectado dinámicamente -->
+          </div>
+          <div id="disc-bars" class="space-y-4">
+            <!-- Alternativa textual inyectada dinámicamente -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Métricas y trazabilidad -->
+      <div class="grid sm:grid-cols-2 gap-4 mb-6">
+        <section class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5"
+                 aria-labelledby="time-title">
+          <p id="time-title" class="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+            Tiempo promedio por pregunta
+          </p>
+          <p id="average-time" class="text-2xl font-black text-gray-900 mt-2"></p>
+          <p id="average-time-detail" class="text-xs text-gray-500 mt-1"></p>
+        </section>
+
+        <section class="bg-white rounded-2xl border border-gray-200 shadow-sm p-5"
+                 aria-labelledby="audit-title">
+          <p id="audit-title" class="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+            Referencia auditable
+          </p>
+          <p id="result-reference" class="font-mono text-sm font-bold text-gray-900 mt-2 break-all"></p>
+          <p id="result-version" class="text-xs text-gray-500 mt-1"></p>
+          <button id="btn-copy-result-id" type="button"
+                  class="mt-3 text-xs font-semibold text-ev-green hover:text-ev-dark
+                         focus:outline-none focus:ring-2 focus:ring-ev-green rounded">
+            Copiar ID completo
+          </button>
+          <span id="copy-result-status" class="sr-only" aria-live="polite"></span>
+        </section>
+      </div>
+
+      <!-- Disclaimer -->
+      <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-8">
+        <p class="text-xs text-blue-600 leading-relaxed">
+          <strong>Nota:</strong> Este perfil es exploratorio y descriptivo — refleja tus
+          tendencias en estos escenarios, no un diagnóstico definitivo. Los perfiles DISC
+          pueden variar según el contexto.
+        </p>
+      </div>
+
+      <!-- Acciones -->
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a id="btn-hub" href="hub.html"
+           class="flex-1 py-4 px-6 rounded-xl font-bold text-white text-sm text-center
+                  bg-ev-green hover:bg-ev-dark
+                  focus:outline-none focus:ring-2 focus:ring-ev-green focus:ring-offset-2
+                  transition-colors">
+          Volver al Hub
+        </a>
+      </div>
+
+      <!-- Nombre del expedicionario -->
+      <p class="text-center text-xs text-gray-300 mt-6 select-none">
+        Expedicionario: <span id="user-name"></span>
+      </p>
+
+    </div>
+  </main>
+
+  <script type="module" src="./js/results.js"></script>
+</body>
+</html>

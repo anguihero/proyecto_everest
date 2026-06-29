@@ -1,0 +1,165 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "casete-contract-v1",
+  "title": "Contrato de Casete — Everest Experience v1.0",
+  "description": "Estructura canónica del campo content en experience_versions. DEC-T-01.",
+  "type": "object",
+  "required": ["schema_version", "meta", "steps", "result_template"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "description": "Versión del contrato. Usar '1.0' para este schema.",
+      "enum": ["1.0"]
+    },
+    "meta": {
+      "type": "object",
+      "required": ["name", "description", "duration_minutes", "total_steps", "capabilities_required"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Nombre legible del casete. Ej: 'Expedición Base'."
+        },
+        "description": {
+          "type": "string",
+          "description": "Descripción breve para el Hub y catálogo."
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Duración estimada en minutos."
+        },
+        "total_steps": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Número total de pasos. Debe coincidir con la longitud del array steps."
+        },
+        "capabilities_required": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["disc_scoring", "via_scoring", "sherpa_feedback", "state_tracking", "coach_slots"]
+          },
+          "description": "Capacidades que la consola debe soportar para ejecutar este casete."
+        }
+      }
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Lista ordenada de pasos. El índice debe ser único y correlativo.",
+      "items": {
+        "type": "object",
+        "required": ["id", "index", "type", "required", "content", "options", "feedback"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9_-]+$",
+            "description": "Identificador estable del paso. Ej: 's01'. No cambia entre versiones del mismo casete."
+          },
+          "index": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Posición del paso (base-0). Debe ser único dentro del casete."
+          },
+          "type": {
+            "type": "string",
+            "enum": ["scenario", "reflection", "briefing"],
+            "description": "scenario=dilema con opciones. reflection=texto libre. briefing=narrativa informativa."
+          },
+          "required": {
+            "type": "boolean",
+            "description": "Si true, el paso debe responderse para poder finalizar la sesión."
+          },
+          "content": {
+            "type": "object",
+            "required": ["title", "narrative"],
+            "additionalProperties": false,
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Título del escenario. < 60 caracteres para mobile."
+              },
+              "narrative": {
+                "type": "string",
+                "description": "Contexto narrativo presentado al jugador. Sin mencionar DISC ni dimensiones."
+              },
+              "context": {
+                "type": ["string", "null"],
+                "description": "Contexto adicional opcional. Puede ser null."
+              }
+            }
+          },
+          "options": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 6,
+            "description": "Opciones de respuesta. Las claves deben ser únicas dentro del paso.",
+            "items": {
+              "type": "object",
+              "required": ["key", "text", "visible"],
+              "additionalProperties": false,
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "pattern": "^[A-Z]$",
+                  "description": "Clave de una letra mayúscula. Ej: A, B, C, D."
+                },
+                "text": {
+                  "type": "string",
+                  "description": "Texto de la opción presentado al jugador. Sin pistas de dimensión DISC."
+                },
+                "visible": {
+                  "type": "boolean",
+                  "description": "Si false, la opción está disponible pero oculta (para modo piloto)."
+                }
+              }
+            }
+          },
+          "feedback": {
+            "type": "object",
+            "description": "Retroalimentación por opción. Las claves deben coincidir con las de options.",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "coaches": {
+            "type": ["object", "null"],
+            "description": "Slots de coaches disponibles para este paso (solo Expedición Cumbre).",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "name":       { "type": "string" },
+                "perspective":{ "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "result_template": {
+      "type": "object",
+      "required": ["type"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["disc_profile", "via_strengths", "composite"],
+          "description": "Tipo de resultado que produce este casete."
+        },
+        "dimensions": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Dimensiones del resultado. Ej: ['D','I','S','C'] para DISC."
+        },
+        "normalization": {
+          "type": "string",
+          "enum": ["sum_to_one", "max_one", "raw"],
+          "description": "Método de normalización de puntajes."
+        }
+      }
+    }
+  }
+}

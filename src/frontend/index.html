@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Everest Experience — Plataforma de desarrollo de liderazgo">
+  <meta name="robots" content="noindex">
+  <title>Acceso — Everest Experience</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ev-green': '#2E7D32',
+            'ev-dark':  '#1B5E20',
+            'ev-gold':  '#FFB300',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Respetar preferencia de movimiento reducido (RX-11) */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="h-full bg-ev-dark font-sans">
+
+  <!-- Fondo degradado sutil -->
+  <div
+    class="fixed inset-0 bg-gradient-to-br from-ev-dark via-ev-green/80 to-ev-dark pointer-events-none"
+    aria-hidden="true">
+  </div>
+
+  <main class="relative min-h-screen flex flex-col items-center justify-center px-4 py-12">
+
+    <!-- Marca -->
+    <header class="mb-8 text-center select-none" aria-label="Everest Experience">
+      <p class="text-ev-gold text-xs font-semibold tracking-[0.3em] uppercase mb-2">
+        Desarrollo de Liderazgo
+      </p>
+      <h1 class="text-3xl font-bold text-white tracking-wide">EVEREST EXPERIENCE</h1>
+    </header>
+
+    <!-- Tarjeta de acceso -->
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden">
+
+      <!-- Cabecera de la tarjeta -->
+      <div class="bg-ev-green px-8 py-6">
+        <h2 id="card-title" class="text-xl font-semibold text-white">Iniciar sesión</h2>
+        <p  id="card-subtitle" class="text-green-100 text-sm mt-1">Accede a tu expedición</p>
+      </div>
+
+      <!-- Cuerpo -->
+      <div class="px-8 py-8">
+
+        <!-- Alerta de error -->
+        <div id="alert-error"
+             role="alert"
+             aria-live="assertive"
+             aria-atomic="true"
+             class="hidden mb-6 px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+        </div>
+
+        <!-- Alerta de éxito/info -->
+        <div id="alert-success"
+             role="status"
+             aria-live="polite"
+             aria-atomic="true"
+             class="hidden mb-6 px-4 py-3 rounded-lg bg-green-50 border border-green-200 text-ev-green text-sm">
+        </div>
+
+        <!-- ══════════ FORMULARIO DE LOGIN ══════════ -->
+        <form id="login-form" novalidate autocomplete="on">
+
+          <!-- Email -->
+          <div class="mb-5">
+            <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">
+              Correo electrónico
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              autocomplete="email"
+              inputmode="email"
+              required
+              aria-required="true"
+              aria-describedby="email-hint"
+              placeholder="tu@empresa.com"
+              class="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-900 text-base
+                     placeholder:text-gray-400
+                     focus:outline-none focus:ring-2 focus:ring-ev-green focus:border-transparent
+                     transition-colors"
+            >
+            <p id="email-hint" class="sr-only">Ingresa el correo con el que fuiste registrado</p>
+          </div>
+
+          <!-- Contraseña -->
+          <div class="mb-6">
+            <div class="flex items-center justify-between mb-2">
+              <label for="password" class="block text-sm font-semibold text-gray-700">
+                Contraseña
+              </label>
+              <button
+                type="button"
+                id="btn-forgot"
+                class="text-xs text-ev-green hover:underline
+                       focus:outline-none focus:ring-1 focus:ring-ev-green rounded px-1"
+              >
+                ¿Olvidaste tu contraseña?
+              </button>
+            </div>
+
+            <div class="relative">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                autocomplete="current-password"
+                required
+                aria-required="true"
+                placeholder="••••••••"
+                class="w-full px-4 py-3 pr-12 rounded-lg border border-gray-300 text-gray-900 text-base
+                       placeholder:text-gray-400
+                       focus:outline-none focus:ring-2 focus:ring-ev-green focus:border-transparent
+                       transition-colors"
+              >
+
+              <!-- Toggle mostrar / ocultar contraseña (RX-08: accesible por teclado) -->
+              <button
+                type="button"
+                id="toggle-password"
+                aria-label="Mostrar contraseña"
+                aria-pressed="false"
+                class="absolute right-3 top-1/2 -translate-y-1/2
+                       text-gray-400 hover:text-gray-700
+                       focus:outline-none focus:ring-1 focus:ring-ev-green rounded p-1
+                       transition-colors"
+              >
+                <!-- Ojo abierto -->
+                <svg id="icon-eye" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7
+                       -1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                </svg>
+                <!-- Ojo cerrado (oculto por defecto) -->
+                <svg id="icon-eye-off" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7
+                       a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243
+                       M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29
+                       M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7
+                       a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Botón de envío -->
+          <button
+            type="submit"
+            id="btn-login"
+            class="w-full py-3 px-4 rounded-lg bg-ev-green hover:bg-ev-dark
+                   text-white font-semibold text-base
+                   transition-colors duration-150
+                   focus:outline-none focus:ring-2 focus:ring-ev-green focus:ring-offset-2
+                   disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            <span id="btn-login-text">Ingresar a la expedición</span>
+            <span id="btn-login-spinner" class="hidden inline-flex items-center gap-2" aria-label="Verificando…">
+              <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+              </svg>
+              Verificando…
+            </span>
+          </button>
+
+        </form>
+
+        <!-- ══════════ FORMULARIO DE RECUPERACIÓN ══════════ -->
+        <form id="recovery-form" class="hidden" novalidate autocomplete="off">
+
+          <p class="text-sm text-gray-600 mb-5">
+            Ingresa tu correo y te enviaremos las instrucciones para restablecer tu contraseña.
+          </p>
+
+          <div class="mb-6">
+            <label for="recovery-email" class="block text-sm font-semibold text-gray-700 mb-2">
+              Correo electrónico
+            </label>
+            <input
+              type="email"
+              id="recovery-email"
+              name="recovery-email"
+              autocomplete="email"
+              inputmode="email"
+              required
+              placeholder="tu@empresa.com"
+              class="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-900 text-base
+                     placeholder:text-gray-400
+                     focus:outline-none focus:ring-2 focus:ring-ev-green focus:border-transparent
+                     transition-colors"
+            >
+          </div>
+
+          <button
+            type="submit"
+            id="btn-recovery"
+            class="w-full py-3 px-4 rounded-lg bg-ev-green hover:bg-ev-dark
+                   text-white font-semibold text-base
+                   transition-colors duration-150
+                   focus:outline-none focus:ring-2 focus:ring-ev-green focus:ring-offset-2
+                   disabled:opacity-60 disabled:cursor-not-allowed mb-3"
+          >
+            <span id="btn-recovery-text">Enviar instrucciones</span>
+            <span id="btn-recovery-spinner" class="hidden inline-flex items-center gap-2" aria-label="Enviando…">
+              <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+              </svg>
+              Enviando…
+            </span>
+          </button>
+
+          <button
+            type="button"
+            id="btn-back-login"
+            class="w-full text-sm text-ev-green hover:underline py-1
+                   focus:outline-none focus:ring-1 focus:ring-ev-green rounded"
+          >
+            ← Volver al inicio de sesión
+          </button>
+
+        </form>
+
+      </div>
+    </div>
+
+    <!-- Pie de página legal -->
+    <footer class="mt-8 text-center">
+      <p class="text-xs text-green-200">
+        Tus datos están protegidos · Habeas Data (Ley 1581 de 2012)
+      </p>
+    </footer>
+
+  </main>
+
+  <!-- =====================================================
+       Script de la página (ES Module)
+       Usa import para cargar auth.js, que a su vez importa
+       el cliente Supabase desde esm.sh (sin script externo).
+       ===================================================== -->
+  <script type="module">
+    import { login, requestPasswordReset, requireNoAuth } from './js/auth.js';
+
+    // Redirigir si ya hay sesión activa (no mostrar login innecesariamente)
+    requireNoAuth();
+
+    // ── Elementos del DOM ──────────────────────────────
+    const loginForm    = document.getElementById('login-form');
+    const recoveryForm = document.getElementById('recovery-form');
+    const emailInput   = document.getElementById('email');
+    const passInput    = document.getElementById('password');
+    const recovEmail   = document.getElementById('recovery-email');
+    const togglePass   = document.getElementById('toggle-password');
+    const iconEye      = document.getElementById('icon-eye');
+    const iconEyeOff   = document.getElementById('icon-eye-off');
+    const btnForgot    = document.getElementById('btn-forgot');
+    const btnBackLogin = document.getElementById('btn-back-login');
+    const btnLogin     = document.getElementById('btn-login');
+    const btnLoginText = document.getElementById('btn-login-text');
+    const btnLoginSpinner = document.getElementById('btn-login-spinner');
+    const btnRecovery  = document.getElementById('btn-recovery');
+    const btnRecovText = document.getElementById('btn-recovery-text');
+    const btnRecovSpinner = document.getElementById('btn-recovery-spinner');
+    const cardTitle    = document.getElementById('card-title');
+    const cardSubtitle = document.getElementById('card-subtitle');
+    const alertError   = document.getElementById('alert-error');
+    const alertSuccess = document.getElementById('alert-success');
+
+    // ── Helpers de UI ──────────────────────────────────
+
+    const showError = (msg) => {
+      alertError.textContent = msg;
+      alertError.classList.remove('hidden');
+      alertSuccess.classList.add('hidden');
+    };
+
+    const showSuccess = (msg) => {
+      alertSuccess.textContent = msg;
+      alertSuccess.classList.remove('hidden');
+      alertError.classList.add('hidden');
+    };
+
+    const clearAlerts = () => {
+      alertError.classList.add('hidden');
+      alertSuccess.classList.add('hidden');
+    };
+
+    const setLoginLoading = (on) => {
+      btnLogin.disabled = on;
+      btnLoginText.classList.toggle('hidden', on);
+      btnLoginSpinner.classList.toggle('hidden', !on);
+    };
+
+    const setRecoveryLoading = (on) => {
+      btnRecovery.disabled = on;
+      btnRecovText.classList.toggle('hidden', on);
+      btnRecovSpinner.classList.toggle('hidden', !on);
+    };
+
+    // ── Toggle de contraseña ───────────────────────────
+    togglePass.addEventListener('click', () => {
+      const visible = passInput.type === 'text';
+      passInput.type = visible ? 'password' : 'text';
+      iconEye.classList.toggle('hidden', !visible);
+      iconEyeOff.classList.toggle('hidden', visible);
+      togglePass.setAttribute('aria-label', visible ? 'Mostrar contraseña' : 'Ocultar contraseña');
+      togglePass.setAttribute('aria-pressed', String(!visible));
+    });
+
+    // ── Cambio de modo: login ↔ recuperación ──────────
+    const showRecovery = () => {
+      loginForm.classList.add('hidden');
+      recoveryForm.classList.remove('hidden');
+      cardTitle.textContent    = 'Recuperar contraseña';
+      cardSubtitle.textContent = 'Te enviamos las instrucciones';
+      clearAlerts();
+      recovEmail.focus();
+    };
+
+    const showLogin = () => {
+      recoveryForm.classList.add('hidden');
+      loginForm.classList.remove('hidden');
+      cardTitle.textContent    = 'Iniciar sesión';
+      cardSubtitle.textContent = 'Accede a tu expedición';
+      clearAlerts();
+      emailInput.focus();
+    };
+
+    btnForgot.addEventListener('click',    showRecovery);
+    btnBackLogin.addEventListener('click', showLogin);
+
+    // ── Submit: login ──────────────────────────────────
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearAlerts();
+
+      const email    = emailInput.value.trim();
+      const password = passInput.value;
+
+      if (!email || !password) {
+        showError('Ingresa tu correo y contraseña para continuar.');
+        return;
+      }
+
+      setLoginLoading(true);
+      try {
+        await login(email, password);
+        // login() redirige automáticamente en caso de éxito.
+        showSuccess('Acceso concedido. Preparando tu expedición…');
+      } catch (err) {
+        showError(err.message);
+        passInput.value = '';
+        passInput.focus();
+      } finally {
+        setLoginLoading(false);
+      }
+    });
+
+    // ── Submit: recuperación ───────────────────────────
+    recoveryForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearAlerts();
+
+      const email = recovEmail.value.trim();
+      setRecoveryLoading(true);
+      try {
+        await requestPasswordReset(email);
+      } catch (_) {
+        // Silenciamos el error técnico intencionalmente (anti-enumeración)
+      } finally {
+        setRecoveryLoading(false);
+        // Siempre el mismo mensaje (RS-SEC-05)
+        showSuccess(
+          'Si existe una cuenta con ese correo, recibirás las instrucciones en breve. Revisa también la carpeta de spam.'
+        );
+        recoveryForm.reset();
+      }
+    });
+
+    // Foco inicial en el campo de email (accesibilidad)
+    emailInput.focus();
+  </script>
+
+</body>
+</html>

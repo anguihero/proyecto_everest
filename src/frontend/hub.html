@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Everest Experience — Hub de expediciones">
+  <meta name="robots" content="noindex">
+  <title>Hub — Everest Experience</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ev-green': '#2E7D32',
+            'ev-dark':  '#1B5E20',
+            'ev-gold':  '#FFB300',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="h-full bg-gray-50 font-sans">
+
+  <!-- ══════════ BARRA DE NAVEGACIÓN ══════════ -->
+  <nav class="bg-ev-dark shadow-md" aria-label="Navegación principal">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+
+      <!-- Marca -->
+      <span class="text-white font-bold tracking-wide text-lg select-none">
+        EVEREST EXPERIENCE
+      </span>
+
+      <!-- Info del usuario + Logout -->
+      <div class="flex items-center gap-4">
+        <a id="btn-team-results" href="results-library.html"
+           class="hidden text-sm text-green-200 hover:text-white font-semibold">
+          Resultados del equipo
+        </a>
+        <div class="text-right hidden sm:block">
+          <p id="user-name" class="text-white text-sm font-semibold">Cargando…</p>
+          <p id="user-role" class="text-green-300 text-xs"></p>
+        </div>
+        <button
+          id="btn-logout"
+          type="button"
+          class="text-sm text-green-200 hover:text-white
+                 focus:outline-none focus:ring-1 focus:ring-white rounded px-2 py-1
+                 transition-colors"
+          aria-label="Cerrar sesión"
+        >
+          Salir
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════ CONTENIDO PRINCIPAL ══════════ -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+
+    <!-- Encabezado de sección -->
+    <header class="mb-8">
+      <h1 class="text-2xl font-bold text-gray-900">Tu expedición</h1>
+      <p class="text-gray-500 mt-1 text-sm">
+        Selecciona una experiencia para iniciar o continuar tu desarrollo.
+      </p>
+    </header>
+
+    <!-- Error general -->
+    <div id="error-message"
+         role="alert"
+         aria-live="assertive"
+         class="hidden mb-6 px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+    </div>
+
+    <!-- Estado de carga -->
+    <div id="loading-state" aria-label="Cargando experiencias" aria-live="polite">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Skeleton cards -->
+        <div class="bg-white rounded-xl border border-gray-200 p-6 animate-pulse">
+          <div class="h-3 bg-gray-200 rounded w-1/3 mb-4"></div>
+          <div class="h-5 bg-gray-300 rounded w-2/3 mb-3"></div>
+          <div class="h-3 bg-gray-200 rounded w-full mb-2"></div>
+          <div class="h-3 bg-gray-200 rounded w-4/5 mb-6"></div>
+          <div class="h-10 bg-gray-200 rounded-lg"></div>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 p-6 animate-pulse">
+          <div class="h-3 bg-gray-200 rounded w-1/3 mb-4"></div>
+          <div class="h-5 bg-gray-300 rounded w-3/4 mb-3"></div>
+          <div class="h-3 bg-gray-200 rounded w-full mb-2"></div>
+          <div class="h-3 bg-gray-200 rounded w-3/4 mb-6"></div>
+          <div class="h-10 bg-gray-200 rounded-lg"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid de experiencias (oculto hasta carga) -->
+    <div id="experience-grid"
+         class="hidden grid grid-cols-1 sm:grid-cols-2 gap-6"
+         aria-label="Tus experiencias asignadas">
+      <!-- Las tarjetas se insertan dinámicamente por hub.js -->
+    </div>
+
+    <!-- ── Sección Mi Equipo (visible solo para coaches) ── -->
+    <section id="team-section" class="hidden mt-12">
+      <header class="mb-6 flex items-center gap-3">
+        <h2 class="text-xl font-bold text-gray-900">Mi Equipo</h2>
+        <span id="team-badge"
+              class="text-xs font-semibold px-2 py-1 rounded-full bg-ev-gold text-white">
+          Líder
+        </span>
+      </header>
+
+      <!-- Cargando equipo -->
+      <div id="team-loading" aria-live="polite">
+        <div class="bg-white rounded-xl border border-gray-200 p-6 animate-pulse">
+          <div class="h-3 bg-gray-200 rounded w-1/4 mb-4"></div>
+          <div class="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+          <div class="h-3 bg-gray-200 rounded w-3/4"></div>
+        </div>
+      </div>
+
+      <!-- Lista del equipo -->
+      <div id="team-list" class="hidden space-y-4"></div>
+
+      <!-- Sin acceso a equipo aún -->
+      <div id="team-pending" class="hidden">
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-6">
+          <div class="flex gap-3">
+            <svg class="w-5 h-5 text-amber-500 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+            </svg>
+            <div>
+              <p class="text-sm font-semibold text-amber-800">Visibilidad del equipo en configuración</p>
+              <p class="text-sm text-amber-700 mt-1">
+                La visualización de progreso de tu equipo requiere configuración por parte del
+                administrador de tu organización. Contacta a tu OrgAdmin para activarla.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Estado vacío -->
+    <div id="empty-state" class="hidden text-center py-16">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4"
+           aria-hidden="true">
+        <svg class="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2
+               M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+        </svg>
+      </div>
+      <h2 class="text-lg font-semibold text-gray-700 mb-2">
+        Aún no tienes expediciones asignadas
+      </h2>
+      <p class="text-sm text-gray-500 max-w-sm mx-auto">
+        El administrador de tu organización te asignará las experiencias disponibles.
+        Vuelve pronto.
+      </p>
+    </div>
+
+  </main>
+
+  <!-- ══════════ PIE DE PÁGINA ══════════ -->
+  <footer class="text-center py-8 text-xs text-gray-400">
+    Everest Experience · Tus datos están protegidos (Ley 1581 de 2012)
+  </footer>
+
+  <script type="module">
+    import { initHub } from './js/hub.js';
+    initHub();
+  </script>
+
+</body>
+</html>

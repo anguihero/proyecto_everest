@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>Expedición — Everest Experience</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ev-green': '#2E7D32',
+            'ev-dark':  '#1B5E20',
+            'ev-gold':  '#FFB300',
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration:0.01ms!important; transition-duration:0.01ms!important; }
+    }
+    /* Layout runner con panel de animación lateral */
+    .runner-layout {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+    }
+    .runner-content { flex: 1 1 0%; min-width: 0; }
+    .animation-panel-wrap {
+      flex: 0 0 240px;
+      width: 240px;
+      position: sticky;
+      top: 1rem;
+      height: calc(100vh - 120px);
+      min-height: 320px;
+    }
+    @media (max-width: 767px) {
+      .runner-layout { flex-direction: column; padding: 0.75rem; }
+      .animation-panel-wrap { width: 100%; height: 110px; position: static; order: -1; flex: none; }
+    }
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .animation-panel-wrap { flex: 0 0 200px; width: 200px; }
+    }
+  </style>
+</head>
+
+<body class="h-full bg-gray-50 font-sans flex flex-col">
+
+  <!-- ══════════ VISTA: CARGANDO ══════════ -->
+  <div id="view-loading" class="fixed inset-0 bg-gray-50 flex flex-col items-center justify-center z-50">
+    <div class="w-12 h-12 rounded-full border-4 border-ev-green/20 border-t-ev-green animate-spin mb-4"
+         role="status" aria-label="Cargando experiencia"></div>
+    <p class="text-gray-500 text-sm">Preparando tu expedición…</p>
+  </div>
+
+  <!-- ══════════ VISTA: ERROR ══════════ -->
+  <div id="view-error" class="hidden fixed inset-0 bg-gray-50 flex flex-col items-center justify-center z-50 p-6">
+    <div class="max-w-sm w-full text-center">
+      <p class="text-5xl mb-4">⛰️</p>
+      <h1 class="text-xl font-bold text-gray-900 mb-2">No pudimos cargar la expedición</h1>
+      <p id="error-message" class="text-sm text-gray-500 mb-6"></p>
+      <p id="error-diagnostic"
+         class="hidden text-xs text-gray-400 font-mono mb-4"
+         aria-live="polite"></p>
+      <a id="error-back-btn" href="hub.html"
+         class="inline-block px-6 py-3 bg-ev-green text-white rounded-xl font-semibold text-sm
+                hover:bg-ev-dark transition-colors focus:outline-none focus:ring-2 focus:ring-ev-green">
+        Volver al Hub
+      </a>
+    </div>
+  </div>
+
+  <!-- ══════════ VISTA: RUNNER ══════════ -->
+  <div id="view-runner" class="hidden flex flex-col min-h-full">
+
+    <!-- Barra de navegación -->
+    <header class="bg-ev-green shadow-md shrink-0">
+      <div class="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3 min-w-0">
+          <span class="text-white font-bold text-sm hidden sm:block tracking-wide select-none shrink-0">
+            EVEREST
+          </span>
+          <span class="text-white/80 text-sm truncate" id="exp-name">Expedición</span>
+        </div>
+        <button id="btn-save-exit" type="button"
+                class="text-white/80 hover:text-white text-xs font-semibold shrink-0
+                       focus:outline-none focus:ring-1 focus:ring-white rounded px-2 py-1
+                       transition-colors"
+                aria-label="Guardar progreso y salir">
+          Guardar y salir
+        </button>
+      </div>
+
+      <!-- Barra de progreso -->
+      <div class="h-1 bg-white/20 mx-0">
+        <div id="progress-bar"
+             class="h-full bg-ev-gold transition-all duration-500 ease-out"
+             style="width: 0%"
+             role="progressbar" aria-label="Progreso de la expedición"
+             aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        </div>
+      </div>
+    </header>
+
+    <!-- Contenido principal + panel animación -->
+    <main class="flex-1 overflow-y-auto">
+      <div class="runner-layout">
+
+        <!-- Panel animación (se rellena por animation-panel.js) -->
+        <aside id="animation-panel"
+               class="animation-panel-wrap hidden"
+               aria-label="Progreso visual de la expedición">
+        </aside>
+
+        <!-- Área de preguntas -->
+        <div class="runner-content">
+        <div class="py-2 sm:py-4">
+
+        <!-- Error inline (compartido entre paneles) -->
+        <p id="inline-error"
+           role="alert" aria-live="assertive"
+           class="hidden mb-4 text-sm text-red-600 text-center rounded-lg bg-red-50 px-4 py-3">
+        </p>
+
+        <!-- Contador de paso + Timer -->
+        <div class="flex items-center justify-between mb-6">
+          <p id="step-counter"
+             class="text-xs font-semibold text-ev-green uppercase tracking-widest">
+            Paso 1 de 3
+          </p>
+          <div id="timer-widget" class="hidden items-center gap-1.5" aria-live="polite" aria-atomic="true">
+            <svg class="w-3.5 h-3.5 shrink-0" id="timer-icon"
+                 viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M8 5v3l2 1.5" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span id="timer-display"
+                  class="text-sm font-bold font-mono tabular-nums text-ev-green transition-colors duration-300">
+              1:00
+            </span>
+          </div>
+        </div>
+
+        <!-- ── Panel pregunta ── -->
+        <div id="question-panel">
+
+          <!-- Card del escenario -->
+          <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8 mb-6">
+            <h1 id="step-title"
+                class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 leading-tight">
+            </h1>
+            <p id="step-narrative"
+               class="text-base text-gray-600 leading-relaxed">
+            </p>
+          </div>
+
+          <!-- Opciones -->
+          <fieldset>
+            <legend class="sr-only">Elige tu respuesta</legend>
+            <div id="options-group"
+                 class="space-y-3"
+                 role="radiogroup"
+                 aria-label="Opciones de respuesta">
+              <!-- Se inyecta dinámicamente -->
+            </div>
+          </fieldset>
+
+          <!-- Botón confirmar -->
+          <div class="mt-8">
+            <button id="btn-confirm" type="button" disabled
+                    class="w-full py-4 px-6 rounded-xl font-bold text-white text-base
+                           bg-ev-green hover:bg-ev-dark
+                           disabled:opacity-40 disabled:cursor-not-allowed
+                           focus:outline-none focus:ring-2 focus:ring-ev-green focus:ring-offset-2
+                           transition-all duration-150 flex items-center justify-center gap-2">
+              <span id="btn-confirm-text">Confirmar decisión</span>
+              <svg id="btn-confirm-spinner"
+                   class="hidden w-5 h-5 animate-spin text-white"
+                   xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                   aria-hidden="true">
+                <circle class="opacity-25" cx="12" cy="12" r="10"
+                        stroke="currentColor" stroke-width="4"/>
+                <path class="opacity-75" fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+              </svg>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ── Panel retroalimentación (Sherpa) ── -->
+        <div id="feedback-panel" class="hidden">
+
+          <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mb-6">
+
+            <!-- Cabecera del Sherpa -->
+            <div class="bg-ev-green/5 border-b border-gray-100 px-6 py-4 flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-ev-green flex items-center justify-center shrink-0"
+                   aria-hidden="true">
+                <span class="text-white font-black text-sm">S</span>
+              </div>
+              <div>
+                <p class="text-sm font-bold text-gray-900">Sherpa</p>
+                <p class="text-xs text-gray-400">Tu guía de expedición</p>
+              </div>
+            </div>
+
+            <!-- Contenido del feedback -->
+            <div class="px-6 py-5">
+              <p id="feedback-choice"
+                 class="text-xs font-semibold text-ev-green uppercase tracking-wider mb-3">
+              </p>
+              <p id="feedback-text"
+                 class="text-sm text-gray-700 leading-relaxed">
+              </p>
+            </div>
+          </div>
+
+          <!-- Botón siguiente / finalizar -->
+          <button id="btn-next" type="button"
+                  class="w-full py-4 px-6 rounded-xl font-bold text-white text-base
+                         bg-ev-green hover:bg-ev-dark
+                         focus:outline-none focus:ring-2 focus:ring-ev-green focus:ring-offset-2
+                         transition-all duration-150 disabled:opacity-40">
+            Siguiente escenario
+          </button>
+
+        </div>
+
+        </div><!-- /runner-content inner -->
+        </div><!-- /runner-content -->
+      </div><!-- /runner-layout -->
+    </main>
+
+    <!-- Pie de página discreto -->
+    <footer class="shrink-0 py-4 text-center text-xs text-gray-300 select-none">
+      Everest Experience · Tu progreso se guarda automáticamente
+    </footer>
+
+  </div>
+
+  <script type="module" src="./js/runner.js"></script>
+</body>
+</html>
