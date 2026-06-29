@@ -70,31 +70,31 @@ gantt
     axisFormat  %d/%m
 
     section A0 Ideacion
-    Ideacion y mockup :active, a0, 2026-06-29, 21d
+    Ideacion y mockup :active, a0, 2026-06-15, 21d
 
     section A Req y HU
-    Requerimientos e HU :a1, 2026-07-20, 35d
+    Requerimientos e HU :a1, 2026-07-06, 35d
 
     section B Infra y arte
-    Exploracion tecnica :b1, 2026-08-17, 14d
+    Exploracion tecnica :b1, 2026-08-03, 14d
 
     section C Arquitectura
-    Arquitectura e IA :c1, 2026-08-24, 14d
+    Arquitectura e IA :c1, 2026-08-10, 14d
 
     section D Identidad
-    Identidad y assets :d1, 2026-08-24, 21d
+    Identidad y assets :d1, 2026-08-10, 21d
 
     section E Frontend
-    Frontend y hub :e1, 2026-09-07, 21d
+    Frontend y hub :e1, 2026-08-24, 21d
 
     section F Backend
-    Backend y Supabase :f1, 2026-09-07, 21d
+    Backend y Supabase :f1, 2026-08-24, 21d
 
     section G QA
-    Integracion y QA :g1, 2026-09-28, 7d
+    Integracion y QA :g1, 2026-09-14, 7d
 
     section H Delivery
-    Delivery :h1, 2026-10-05, 7d
+    Delivery :h1, 2026-09-21, 7d
 ```
 
 ## Criterios de Transicion entre Fases (Milestones)
