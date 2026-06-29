@@ -63,37 +63,38 @@ Fase H: Delivery  |    |    |    |    |    |    |    |    |    |    |    |    | 
 ```
 
 ```mermaid
+%%{init: {"theme": "base", "gantt": {"displayMode": "compact", "barHeight": 24, "barGap": 6, "topPadding": 36, "leftPadding": 135, "gridLineStartPadding": 18, "fontSize": 12, "sectionFontSize": 12}}}%%
 gantt
     title Cronograma de Ejecucion del Proyecto (15 Semanas)
-    dateFormat  Wk
-    axisFormat W%V
+    dateFormat  YYYY-MM-DD
+    axisFormat  %d/%m
 
-    section Fase A0: Ideacion
-    Ideacion estrategica y mockup inicial :active, a0, 0, 3w
+    section A0 Ideacion
+    Ideacion y mockup :active, a0, 2026-06-29, 21d
 
-    section Fase A: Req & HU
-    Definicion y Refinamiento : a1, 3, 5w
+    section A Req y HU
+    Requerimientos e HU :a1, 2026-07-20, 35d
 
-    section Fase B: Infra/Art
-    Exploracion y Benchmarking : b1, 7, 2w
+    section B Infra y arte
+    Exploracion tecnica :b1, 2026-08-17, 14d
 
-    section Fase C: Arq & IA
-    Diseno de Arquitectura y Prompts : c1, 8, 2w
+    section C Arquitectura
+    Arquitectura e IA :c1, 2026-08-24, 14d
 
-    section Fase D: UI/UX & Id
-    Identidad Visual y Assets del Everest : d1, 8, 3w
+    section D Identidad
+    Identidad y assets :d1, 2026-08-24, 21d
 
-    section Fase E: Dev Front
-    Desarrollo de Interfaz y Hub : e1, 10, 3w
+    section E Frontend
+    Frontend y hub :e1, 2026-09-07, 21d
 
-    section Fase F: Dev Back
-    Base de Datos y Supabase Edge : f1, 10, 3w
+    section F Backend
+    Backend y Supabase :f1, 2026-09-07, 21d
 
-    section Fase G: Integra/QA
-    Integracion E2E y Pruebas : g1, 13, 1w
+    section G QA
+    Integracion y QA :g1, 2026-09-28, 7d
 
-    section Fase H: Delivery
-    Entrega Funcional y Onboarding : h1, 14, 1w
+    section H Delivery
+    Delivery :h1, 2026-10-05, 7d
 ```
 
 ## Criterios de Transicion entre Fases (Milestones)
